@@ -102,13 +102,17 @@ class BaseScraper(ABC):
         self._last_request_time = time.time()
 
         browser = random.choice(_IMPERSONATE_BROWSERS)
+        headers = {
+            "Accept-Language": "nl-BE,nl;q=0.9,en-US;q=0.8,en;q=0.7",
+        }
+        if "headers" in kwargs:
+            headers.update(kwargs.pop("headers"))
+
         response = curl_requests.get(
             url,
             impersonate=browser,
             timeout=30,
-            headers={
-                "Accept-Language": "nl-BE,nl;q=0.9,en-US;q=0.8,en;q=0.7",
-            },
+            headers=headers,
             **kwargs,
         )
         response.raise_for_status()

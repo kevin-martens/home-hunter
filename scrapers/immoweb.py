@@ -39,7 +39,7 @@ class ImmowebScraper(BaseScraper):
         f"&maxPrice={MAX_PRICE}"
         f"&minBedroomCount={MIN_BEDROOMS}"
         "&orderBy=newest"
-        "&page={{page}}"
+        "&page={page}"
     )
 
     MAX_PAGES = 3
@@ -53,7 +53,7 @@ class ImmowebScraper(BaseScraper):
         f"&maxPrice={MAX_PRICE}"
         f"&minBedroomCount={MIN_BEDROOMS}"
         "&orderBy=newest"
-        "&page={{page}}"
+        "&page={page}"
     )
 
     def scrape(self) -> list[Listing]:
