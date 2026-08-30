@@ -19,7 +19,7 @@ import re
 from bs4 import BeautifulSoup
 
 from scrapers.base import BaseScraper, Listing
-from config import TARGET_POSTAL_CODE, TARGET_CITY, MIN_PRICE, MAX_PRICE, MIN_BEDROOMS
+from config import TARGET_LOCATIONS, PROPERTY_TYPES, TRANSACTION_TYPES, MIN_PRICE, MAX_PRICE, MIN_BUY_PRICE, MAX_BUY_PRICE, MIN_BEDROOMS
 
 logger = logging.getLogger(__name__)
 
@@ -30,56 +30,67 @@ class ImmowebScraper(BaseScraper):
     PLATFORM_NAME = "immoweb"
     REQUEST_DELAY = 2.0
 
-    # Search URL with filters for rentals
-    SEARCH_URL = (
-        "https://www.immoweb.be/en/search/apartment/for-rent"
-        "?countries=BE"
-        f"&postalCodes=BE-{TARGET_POSTAL_CODE}"
-        f"&minPrice={MIN_PRICE}"
-        f"&maxPrice={MAX_PRICE}"
-        f"&minBedroomCount={MIN_BEDROOMS}"
-        "&orderBy=newest"
-        "&page={page}"
-    )
 
     MAX_PAGES = 3
 
-    # Immoweb search-results API — the frontend fetches JSON from this endpoint
-    API_URL = (
-        "https://www.immoweb.be/en/search-results/apartment/for-rent"
-        "?countries=BE"
-        f"&postalCodes=BE-{TARGET_POSTAL_CODE}"
-        f"&minPrice={MIN_PRICE}"
-        f"&maxPrice={MAX_PRICE}"
-        f"&minBedroomCount={MIN_BEDROOMS}"
-        "&orderBy=newest"
-        "&page={page}"
-    )
+
 
     def scrape(self) -> list[Listing]:
-        """Scrape Immoweb search results across multiple pages."""
+        """Scrape Immoweb search results across multiple pages, types, and locations."""
         listings = []
 
-        for page in range(1, self.MAX_PAGES + 1):
-            url = self.SEARCH_URL.format(page=page)
+        for city, postal_code in TARGET_LOCATIONS:
+            for prop_type in PROPERTY_TYPES:
+                for trans_type in TRANSACTION_TYPES:
+                    
+                    self.current_min_price = MIN_PRICE if trans_type == "rent" else MIN_BUY_PRICE
+                    self.current_max_price = MAX_PRICE if trans_type == "rent" else MAX_BUY_PRICE
+                    self.current_postal_code = postal_code
+                    self.current_city = city
+                    
+                    immo_prop_type = "apartment" if prop_type == "apartment" else "house"
+                    immo_trans_type = "for-rent" if trans_type == "rent" else "for-sale"
+                    
+                    for page in range(1, self.MAX_PAGES + 1):
+                        self.current_search_url = (
+                            f"https://www.immoweb.be/en/search/{immo_prop_type}/{immo_trans_type}"
+                            f"?countries=BE"
+                            f"&postalCodes=BE-{postal_code}"
+                            f"&minPrice={self.current_min_price}"
+                            f"&maxPrice={self.current_max_price}"
+                            f"&minBedroomCount={MIN_BEDROOMS}"
+                            "&orderBy=newest"
+                            f"&page={page}"
+                        )
+                        
+                        self.current_api_url = (
+                            f"https://www.immoweb.be/en/search-results/{immo_prop_type}/{immo_trans_type}"
+                            f"?countries=BE"
+                            f"&postalCodes=BE-{postal_code}"
+                            f"&minPrice={self.current_min_price}"
+                            f"&maxPrice={self.current_max_price}"
+                            f"&minBedroomCount={MIN_BEDROOMS}"
+                            "&orderBy=newest"
+                            f"&page={page}"
+                        )
 
-            # Try JSON API first (XHR-style request), then fall back to HTML
-            page_listings = self._scrape_via_api(page)
-            if not page_listings:
-                page_listings = self._scrape_search_page(url)
+                        # Try JSON API first (XHR-style request), then fall back to HTML
+                        page_listings = self._scrape_via_api(page)
+                        if not page_listings:
+                            page_listings = self._scrape_search_page(self.current_search_url)
 
-            if not page_listings:
-                logger.info(f"[{self.PLATFORM_NAME}] No more results on page {page}")
-                break
+                        if not page_listings:
+                            logger.info(f"[{self.PLATFORM_NAME}] No more results on page {page} for {city} {prop_type} {trans_type}")
+                            break
 
-            listings.extend(page_listings)
-            logger.info(f"[{self.PLATFORM_NAME}] Page {page}: {len(page_listings)} listings")
+                        listings.extend(page_listings)
+                        logger.info(f"[{self.PLATFORM_NAME}] Page {page} ({city} {prop_type} {trans_type}): {len(page_listings)} listings")
 
         return listings
 
     def _scrape_via_api(self, page: int) -> list[Listing]:
         """Try Immoweb's search API which returns JSON (less likely to be blocked)."""
-        api_url = self.API_URL.format(page=page)
+        api_url = self.current_api_url
         try:
             # Mimic an XHR request from the Immoweb frontend
             response = self._rate_limited_get(api_url, headers={
@@ -123,16 +134,16 @@ class ImmowebScraper(BaseScraper):
                     if isinstance(rental, dict):
                         price = int(rental.get("monthlyRentalPrice", 0))
 
-            if not (MIN_PRICE <= price <= MAX_PRICE):
+            if not (self.current_min_price <= price <= self.current_max_price):
                 return None
 
             # Location
             prop = item.get("property", {})
             loc = prop.get("location", {}) if isinstance(prop, dict) else {}
-            address = f"{TARGET_POSTAL_CODE} {TARGET_CITY.capitalize()}"
+            address = f"{self.current_postal_code} {self.current_city.capitalize()}"
             if isinstance(loc, dict):
-                postal = loc.get("postalCode", TARGET_POSTAL_CODE)
-                locality = loc.get("locality", TARGET_CITY.capitalize())
+                postal = loc.get("postalCode", self.current_postal_code)
+                locality = loc.get("locality", self.current_city.capitalize())
                 address = f"{postal} {locality}"
 
             # Bedrooms
@@ -151,11 +162,11 @@ class ImmowebScraper(BaseScraper):
             title = item.get("title", "") or f"Apartment in {address}"
 
             # URL
-            url = f"https://www.immoweb.be/en/classified/apartment/for-rent/{listing_id}"
+            url = f"https://www.immoweb.be/en/classified/property/for-sale-or-rent/{listing_id}"
             if item.get("property", {}).get("location", {}).get("locality"):
                 loc_name = loc["locality"].lower().replace(" ", "-")
-                postal = loc.get("postalCode", TARGET_POSTAL_CODE)
-                url = f"https://www.immoweb.be/en/classified/apartment/for-rent/{loc_name}/{postal}/{listing_id}"
+                postal = loc.get("postalCode", self.current_postal_code)
+                url = f"https://www.immoweb.be/en/classified/property/for-sale-or-rent/{loc_name}/{postal}/{listing_id}"
 
             # Images
             images = []
@@ -259,16 +270,16 @@ class ImmowebScraper(BaseScraper):
                             if isinstance(rental, dict):
                                 price = int(rental.get("monthlyRentalPrice", 0))
                         
-                        if not (MIN_PRICE <= price <= MAX_PRICE):
+                        if not (self.current_min_price <= price <= self.current_max_price):
                             logger.debug(f"[{self.PLATFORM_NAME}] Skipping {listing_id}: price €{price} out of range")
                             return None
                             
                         # Location
                         loc_data = data.get("property", {}).get("location", {})
                         if isinstance(loc_data, dict):
-                            address = f"{loc_data.get('postalCode', TARGET_POSTAL_CODE)} {loc_data.get('locality', TARGET_CITY.capitalize())}"
+                            address = f"{loc_data.get('postalCode', self.current_postal_code)} {loc_data.get('locality', self.current_city.capitalize())}"
                         else:
-                            address = f"{TARGET_POSTAL_CODE} {TARGET_CITY.capitalize()}"
+                            address = f"{self.current_postal_code} {self.current_city.capitalize()}"
                         
                         # Bedrooms
                         bedrooms = 0
@@ -341,7 +352,7 @@ class ImmowebScraper(BaseScraper):
                     price_text = price_el.get_text(strip=True)
                 price = self._parse_price(price_text)
 
-            if not (MIN_PRICE <= price <= MAX_PRICE):
+            if not (self.current_min_price <= price <= self.current_max_price):
                 logger.debug(f"[{self.PLATFORM_NAME}] Skipping {listing_id}: price €{price} out of range")
                 return None
 
@@ -351,7 +362,7 @@ class ImmowebScraper(BaseScraper):
                 "[class*='locality'], "
                 ".card__location"
             )
-            address = location_el.get_text(strip=True) if location_el else f"{TARGET_POSTAL_CODE} {TARGET_CITY.capitalize()}"
+            address = location_el.get_text(strip=True) if location_el else f"{self.current_postal_code} {self.current_city.capitalize()}"
 
             # Bedrooms and surface from the information element
             # Text looks like: "1 bdr. · 60 m²" or "2 bdr. · 95 m²"
@@ -486,7 +497,7 @@ class ImmowebScraper(BaseScraper):
 
             offers = actual.get("offers", {})
             price = int(offers.get("price", 0)) if isinstance(offers, dict) else 0
-            if not (MIN_PRICE <= price <= MAX_PRICE):
+            if not (self.current_min_price <= price <= self.current_max_price):
                 return None
 
             return Listing(
@@ -495,7 +506,7 @@ class ImmowebScraper(BaseScraper):
                 title=actual.get("name", f"Apartment — €{price}/mo"),
                 price=price,
                 bedrooms=MIN_BEDROOMS,
-                address=f"{TARGET_POSTAL_CODE} {TARGET_CITY.capitalize()}",
+                address=f"{self.current_postal_code} {self.current_city.capitalize()}",
                 url=url if url.startswith("http") else f"https://www.immoweb.be{url}",
                 description=actual.get("description", ""),
                 image_urls=[actual["image"]] if actual.get("image") else [],

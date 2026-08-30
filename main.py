@@ -24,7 +24,7 @@ from email_sender.digest import send_digest, send_weekly_digest
 from location_filter import assess_station_proximity, filter_listings_for_station
 from scoring.photo_scorer import PhotoScorer, compute_final_scores
 from scoring.text_scorer import TextScorer
-from scrapers import ImmowebScraper, ImmoscoopScraper, Listing, ZimmoScraper
+from scrapers import ImmowebScraper, ImmoscoopScraper, Listing, ZimmoScraper, SpottoScraper
 from storage import (
     build_sent_index,
     iso_week_key,
@@ -57,7 +57,7 @@ HISTORY_FILE = DATA_DIR / "listing_history.json"
 
 def scrape_all() -> list[Listing]:
     """Run all scrapers and collect listings."""
-    scrapers = [ImmowebScraper(), ZimmoScraper(), ImmoscoopScraper()]
+    scrapers = [ImmowebScraper(), ZimmoScraper(), ImmoscoopScraper(), SpottoScraper()]
     all_listings: list[Listing] = []
 
     for scraper in scrapers:
@@ -84,6 +84,7 @@ def deduplicate(
     """
     new_listings: list[Listing] = []
     run_fingerprints: set[str] = set()
+    run_unique_keys: set[str] = set()
 
     for listing in listings:
         unique_key = listing.unique_key
@@ -91,6 +92,10 @@ def deduplicate(
 
         if unique_key in sent_unique_keys:
             logger.debug("Skipping previously emailed listing id: %s", unique_key)
+            continue
+            
+        if unique_key in run_unique_keys:
+            logger.debug("Skipping same-run duplicate listing id: %s", unique_key)
             continue
 
         if fingerprint in sent_fingerprints:
@@ -102,6 +107,7 @@ def deduplicate(
             continue
 
         run_fingerprints.add(fingerprint)
+        run_unique_keys.add(unique_key)
         new_listings.append(listing)
 
     logger.info(

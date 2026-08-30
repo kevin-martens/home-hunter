@@ -1,4 +1,4 @@
-"""AI text scoring using Groq API (Llama 3.3 70B) for 'modern & clean' vibes."""
+"""AI text scoring using Groq API for 'modern & clean' vibes."""
 
 import json
 import logging
@@ -17,12 +17,20 @@ DEFAULT_REASONING = "AI scoring unavailable — unranked"
 class TextScorer:
     """Score listing descriptions for modern/clean vibes using Groq API."""
 
-    MODEL = "llama-3.3-70b-versatile"
+    MODEL = "openai/gpt-oss-120b"
     MAX_RETRIES = 2
     RETRY_DELAY = 5  # seconds
 
     SYSTEM_PROMPT = """You are a real estate quality analyzer specializing in Belgian rental apartments. 
-You evaluate apartment listings for how MODERN and CLEAN they appear based on their description.
+You evaluate apartment listings for a young 25-year-old professional working in IT. Keep in mind that the target audience is looking for contemporary, well-maintained apartments with modern finishes.
+
+Scoring priorities (in order):
+1. Parking: minimum 1 garage space or covered parking spot is a big plus
+2. Heat pump heating system — strongly preferred
+3. EPC label A or B — preferred
+4. Modern & renovated finish
+5. Edge of city / residential area preferred over city centre (like countryside or suburban feel, good for biking - ps extra storage space for bike or stuff in a underground or outdoor space is a plus)
+6. Solar panels — preferred (but not mandatory)
 
 Your scoring criteria (1-10 scale):
 - 9-10: Clearly renovated/new build, modern finishes, contemporary design
@@ -111,7 +119,6 @@ Respond with this exact JSON format:
                         {"role": "system", "content": self.SYSTEM_PROMPT},
                         {"role": "user", "content": prompt},
                     ],
-                    response_format={"type": "json_object"},
                     temperature=0.3,
                     max_tokens=200,
                 )

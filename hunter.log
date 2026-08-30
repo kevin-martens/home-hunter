@@ -1,0 +1,2275 @@
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-06-16 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 15 ids, 19 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 18 listings
+08:00:02 [INFO] [immoweb] Page 1: 18 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] Found 30 card elements on page
+08:00:09 [INFO] [immoweb] No more results on page 2
+08:00:09 [INFO] [immoweb] ✅ Found 18 listings
+08:00:09 [INFO] 
+==================================================
+08:00:09 [INFO] Scraping zimmo...
+08:00:09 [INFO] ==================================================
+08:00:09 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:10 [INFO] [zimmo] Page 1: 8 listings
+08:00:12 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:13 [INFO] [zimmo] Page 2: 8 listings
+08:00:16 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:16 [INFO] [zimmo] Page 3: 8 listings
+08:00:16 [INFO] [zimmo] ✅ Found 24 listings
+08:00:16 [INFO] 
+==================================================
+08:00:16 [INFO] Scraping immoscoop...
+08:00:16 [INFO] ==================================================
+08:00:16 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:17 [INFO] [immoscoop] Trying alternative URL
+08:00:21 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:22 [INFO] [immoscoop] No more results on page 1
+08:00:22 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:22 [INFO] 
+Total listings scraped: 42
+08:00:22 [INFO] New listings after deduplication: 7 (filtered 35 duplicates/previously emailed)
+08:00:22 [INFO] 
+Enriching listings...
+08:00:22 [INFO] Enriching immoweb:21553855...
+08:00:22 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:22 [INFO] Enriching immoweb:21541060...
+08:00:25 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:25 [INFO] Enriching immoweb:21535844...
+08:00:29 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21535844
+08:00:29 [INFO] Enriching immoweb:21460551...
+08:00:33 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:33 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=2...
+08:00:33 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LNX63/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:33 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=2...
+08:00:37 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LMOD4/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:37 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=2...
+08:00:40 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LKXF3/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:40 [INFO] Proximity filter kept 0/7 listings
+08:00:40 [INFO] 
+AI text scoring...
+08:00:40 [INFO] ✅ Groq client initialized
+08:00:40 [INFO] [text_scorer] Scoring 0 listings...
+08:00:40 [INFO] 
+Photo scoring disabled by configuration
+08:00:40 [INFO] 
+============================================================
+08:00:40 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:40 [INFO] ============================================================
+08:00:40 [INFO] No listings to show
+08:00:40 [INFO] 
+Sending daily digest...
+08:00:40 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:42 [INFO] Email sent successfully
+08:00:42 [INFO] 
+Done in 40.6s
+08:00:02 [INFO] Apartment Hunter starting...
+08:00:02 [INFO] Timestamp: 2026-06-17 08:00:02
+08:00:02 [INFO] Mode: full
+08:00:02 [INFO] Previously emailed listings: 15 ids, 19 fingerprints
+08:00:02 [INFO] 
+==================================================
+08:00:02 [INFO] Scraping immoweb...
+08:00:02 [INFO] ==================================================
+08:00:02 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:05 [WARNING] [immoweb] Failed to fetch (HTTP 0): Failed to perform, curl: (6) Could not resolve host: www.immoweb.be. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+08:00:05 [WARNING] [immoweb] Failed to fetch search page
+08:00:05 [INFO] [immoweb] No more results on page 1
+08:00:05 [INFO] [immoweb] ✅ Found 0 listings
+08:00:05 [INFO] 
+==================================================
+08:00:05 [INFO] Scraping zimmo...
+08:00:05 [INFO] ==================================================
+08:00:05 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:05 [WARNING] [zimmo] Failed to fetch (HTTP 0): Failed to perform, curl: (6) Could not resolve host: www.zimmo.be. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+08:00:05 [WARNING] [zimmo] Failed to fetch: all attempts returned 403
+08:00:05 [INFO] [zimmo] No more results on page 1
+08:00:05 [INFO] [zimmo] ✅ Found 0 listings
+08:00:05 [INFO] 
+==================================================
+08:00:05 [INFO] Scraping immoscoop...
+08:00:05 [INFO] ==================================================
+08:00:05 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:05 [WARNING] [immoscoop] Failed to fetch (HTTP 0): Failed to perform, curl: (6) Could not resolve host: www.immoscoop.be. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+08:00:05 [WARNING] [immoscoop] Failed to fetch: all attempts failed
+08:00:05 [INFO] [immoscoop] Trying alternative URL
+08:00:10 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:10 [WARNING] [immoscoop] Failed to fetch (HTTP 0): Failed to perform, curl: (6) Could not resolve host: www.immoscoop.be. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+08:00:10 [WARNING] [immoscoop] Failed to fetch: all attempts failed
+08:00:10 [INFO] [immoscoop] No more results on page 1
+08:00:10 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:10 [INFO] 
+Total listings scraped: 0
+08:00:10 [INFO] New listings after deduplication: 0 (filtered 0 duplicates/previously emailed)
+08:00:10 [INFO] No new listings after deduplication
+08:00:10 [INFO] 
+Sending daily digest...
+08:00:10 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:10 [ERROR] Failed to send email: [Errno -3] Temporary failure in name resolution
+08:00:10 [ERROR] Daily digest failed
+08:00:10 [INFO] 
+Done in 8.6s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-06-18 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 15 ids, 19 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 17 listings
+08:00:02 [INFO] [immoweb] Page 1: 17 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:09 [INFO] [immoweb] No more results on page 2
+08:00:09 [INFO] [immoweb] ✅ Found 17 listings
+08:00:09 [INFO] 
+==================================================
+08:00:09 [INFO] Scraping zimmo...
+08:00:09 [INFO] ==================================================
+08:00:09 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 7 listings
+08:00:11 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 7 listings
+08:00:14 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:14 [INFO] [zimmo] Page 3: 7 listings
+08:00:14 [INFO] [zimmo] ✅ Found 21 listings
+08:00:14 [INFO] 
+==================================================
+08:00:14 [INFO] Scraping immoscoop...
+08:00:14 [INFO] ==================================================
+08:00:14 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:15 [INFO] [immoscoop] Trying alternative URL
+08:00:19 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:20 [INFO] [immoscoop] No more results on page 1
+08:00:20 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:20 [INFO] 
+Total listings scraped: 38
+08:00:20 [INFO] New listings after deduplication: 11 (filtered 27 duplicates/previously emailed)
+08:00:20 [INFO] 
+Enriching listings...
+08:00:20 [INFO] Enriching immoweb:21650294...
+08:00:20 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21650294
+08:00:20 [INFO] Enriching immoweb:21650293...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21650293
+08:00:24 [INFO] Enriching immoweb:21553855...
+08:00:26 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:27 [INFO] Enriching immoweb:21541060...
+08:00:30 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:31 [INFO] Enriching immoweb:21535844...
+08:00:33 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21535844
+08:00:34 [INFO] Enriching immoweb:21460551...
+08:00:36 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:37 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=2...
+08:00:37 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LOD5H/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:37 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=2...
+08:00:40 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LNX63/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:41 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=2...
+08:00:43 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LMOD4/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:44 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=2...
+08:00:47 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LMOUC/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:47 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=2...
+08:00:50 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LKXF3/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:50 [INFO] Proximity filter kept 4/11 listings
+08:00:50 [INFO] 
+AI text scoring...
+08:00:50 [INFO] ✅ Groq client initialized
+08:00:50 [INFO] [text_scorer] Scoring 4 listings...
+08:00:51 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:52 [INFO] [text_scorer] (1/4) immoweb:21650294 → 6.0/10
+08:00:52 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:53 [INFO] [text_scorer] (2/4) immoweb:21650293 → 5.0/10
+08:00:54 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:55 [INFO] [text_scorer] (3/4) zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=2 → 3.0/10
+08:00:55 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:55 [INFO] [text_scorer] (4/4) zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=2 → 3.0/10
+08:00:55 [INFO] 
+Photo scoring disabled by configuration
+08:00:55 [INFO] 
+============================================================
+08:00:55 [INFO] DAILY RESULTS - 4 new listings ranked
+08:00:55 [INFO] ============================================================
+08:00:55 [INFO] #1 [6.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 820/mo - 9620 Zottegem (immoweb)
+08:00:55 [INFO]     The apartment has a private garage and a relatively modern layout, but the EPC label C and lack of specific modern features in the description suggest an average level of modernity, and the central location is not preferred. | no location preference matches
+08:00:55 [INFO] #2 [5.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 895/mo - 9620 Zottegem (immoweb)
+08:00:55 [INFO]     The apartment has a private garage which is a plus, but the EPC label D and lack of modern indicators in the description suggest an average, somewhat dated apartment. | no location preference matches
+08:00:55 [INFO] #3 [3.0/10] Appartement te huur - EUR 820/mo - Arthur Gevaertlaan 509620 Zottegem (zimmo)
+08:00:55 [INFO]     The listing lacks any information about the apartment's condition, age, or features, and does not provide enough details to determine its modernity, suggesting an older or average apartment. | no location preference matches
+08:00:55 [INFO] #4 [3.0/10] Appartement te huur - EUR 895/mo - Arthur Gevaertlaan 509620 Zottegem (zimmo)
+08:00:55 [INFO]     The listing lacks any information about the apartment's condition, age, or features, and does not provide enough details to determine its modernity, resulting in a low score. | no location preference matches
+08:00:55 [INFO] 
+Sending daily digest...
+08:00:55 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:56 [INFO] Email sent successfully
+08:00:56 [INFO] 
+Done in 54.9s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-06-19 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 18 ids, 23 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 17 listings
+08:00:02 [INFO] [immoweb] Page 1: 17 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 17 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:08 [INFO] [zimmo] Page 1: 6 listings
+08:00:11 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 6 listings
+08:00:15 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:15 [INFO] [zimmo] Page 3: 6 listings
+08:00:15 [INFO] [zimmo] ✅ Found 18 listings
+08:00:15 [INFO] 
+==================================================
+08:00:15 [INFO] Scraping immoscoop...
+08:00:15 [INFO] ==================================================
+08:00:15 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:16 [INFO] [immoscoop] Trying alternative URL
+08:00:20 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:21 [INFO] [immoscoop] No more results on page 1
+08:00:21 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:21 [INFO] 
+Total listings scraped: 35
+08:00:21 [INFO] New listings after deduplication: 7 (filtered 28 duplicates/previously emailed)
+08:00:21 [INFO] 
+Enriching listings...
+08:00:21 [INFO] Enriching immoweb:21653046...
+08:00:21 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21653046
+08:00:21 [INFO] Enriching immoweb:21553855...
+08:00:24 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:25 [INFO] Enriching immoweb:21541060...
+08:00:27 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:27 [INFO] Enriching immoweb:21535844...
+08:00:30 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21535844
+08:00:30 [INFO] Enriching immoweb:21460551...
+08:00:33 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:34 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:34 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LMOD4/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:34 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:37 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LKXF3/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:37 [INFO] Proximity filter kept 1/7 listings
+08:00:37 [INFO] 
+AI text scoring...
+08:00:38 [INFO] ✅ Groq client initialized
+08:00:38 [INFO] [text_scorer] Scoring 1 listings...
+08:00:38 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:38 [INFO] [text_scorer] (1/1) immoweb:21653046 → 5.0/10
+08:00:38 [INFO] 
+Photo scoring disabled by configuration
+08:00:38 [INFO] 
+============================================================
+08:00:38 [INFO] DAILY RESULTS - 1 new listings ranked
+08:00:38 [INFO] ============================================================
+08:00:38 [INFO] #1 [5.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 850/mo - 9620 Zottegem (immoweb)
+08:00:38 [INFO]     The listing lacks specific details, but its location in a residential area like Zottegem and average surface of 112m² suggest an average, potentially moderately modern apartment, but without clear indicators of modernity or recent renovation. | no location preference matches
+08:00:38 [INFO] 
+Sending daily digest...
+08:00:38 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:40 [INFO] Email sent successfully
+08:00:40 [INFO] 
+============================================================
+08:00:40 [INFO] WEEKLY TOP 10 - Week 25 of 2026
+08:00:40 [INFO] ============================================================
+08:00:40 [INFO] #1 [9.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 985/mo - 9620 Zottegem (immoweb)
+08:00:40 [INFO]     The apartment is described as 'nieuwbouwappartement', indicating it's a new build, and features modern elements such as a warmtepomp, vloerverwarming, and zonnepanelen, along with a fully renovated and modern finish. | near preferred location: centrum
+08:00:40 [INFO] #2 [8.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 785/mo - 9620 Zottegem (immoweb)
+08:00:40 [INFO]     The apartment is described as 'recent' with 'energy-efficient construction' and 'modern living comfort', indicating a modern and well-maintained living space, but lacks specific details on the heating system and parking. | no location preference matches
+08:00:40 [INFO] #3 [8.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 960/mo - 9620 Zottegem (immoweb)
+08:00:40 [INFO]     The apartment features a heat pump heating system, solar panels, and a fully equipped kitchen with modern appliances, indicating a modern and well-maintained living space, but the EPC label D is a drawback. | no location preference matches
+08:00:40 [INFO] #4 [8.0/10] Appartement te huur - EUR 940/mo - Trapstraat 99620 Zottegem (zimmo)
+08:00:40 [INFO]     The apartment is described as 'NIEUWBOUW', indicating it's a new build, which suggests modern finishes and contemporary design, but the lack of information about the heating system, solar panels, and EPC label prevents a perfect score. | near preferred location: centrum
+08:00:40 [INFO] #5 [7.0/10] Apartment in 9620 ZOTTEGEM — 9620 ZOTTEGEM - EUR 1020/mo - 9620 ZOTTEGEM (immoweb)
+08:00:40 [INFO]     The apartment has modern finishes and is described as 'bright' and 'beautifully maintained', but lacks specific details on recent renovations or high-end features, and the location is in the city centre which is less preferred. | no location preference matches
+08:00:40 [INFO] #6 [7.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 850/mo - 9620 Zottegem (immoweb)
+08:00:40 [INFO]     The apartment is described as 'modern' and 'instapklaar', indicating a modern and well-maintained condition, but lacks specific details on recent renovations or high-end finishes, and has only one parking space. | near preferred location: centrum
+08:00:40 [INFO] #7 [7.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 995/mo - 9620 Zottegem (immoweb)
+08:00:40 [INFO]     The apartment has a modern installation with a ventilation system and gas central heating, and an EPC label A, indicating a well-maintained and energy-efficient home, but lacks specific details on modern finishes and recent renovations. | no location preference matches
+08:00:40 [INFO] #8 [6.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 795/mo - 9620 Zottegem (immoweb)
+08:00:40 [INFO]     The apartment has a good EPC label A, but the limited description does not provide enough information to confirm modern finishes or recent renovations, so a moderate score is assigned. | no location preference matches
+08:00:40 [INFO] #9 [6.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 855/mo - 9620 Zottegem (immoweb)
+08:00:40 [INFO]     The apartment has a private garage and a relatively modern layout, but the EPC label C and lack of specific modern features in the description suggest an average level of modernity. | no location preference matches
+08:00:40 [INFO] #10 [6.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 840/mo - 9620 Zottegem (immoweb)
+08:00:40 [INFO]     The apartment has a relatively good EPC label of B, but the limited description does not provide enough information to suggest a high level of modernity, and the location in a residential area like Zottegem may indicate a more average finish. | no location preference matches
+08:00:40 [INFO] 
+Sending weekly digest...
+08:00:40 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:41 [INFO] Email sent successfully
+08:00:41 [INFO] 
+Done in 39.7s
+08:00:02 [INFO] Apartment Hunter starting...
+08:00:02 [INFO] Timestamp: 2026-06-20 08:00:02
+08:00:02 [INFO] Mode: full
+08:00:02 [INFO] Previously emailed listings: 19 ids, 24 fingerprints
+08:00:02 [INFO] 
+==================================================
+08:00:02 [INFO] Scraping immoweb...
+08:00:02 [INFO] ==================================================
+08:00:02 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 19 listings
+08:00:02 [INFO] [immoweb] Page 1: 19 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:10 [INFO] [immoweb] Found 30 card elements on page
+08:00:10 [INFO] [immoweb] No more results on page 2
+08:00:10 [INFO] [immoweb] ✅ Found 19 listings
+08:00:10 [INFO] 
+==================================================
+08:00:10 [INFO] Scraping zimmo...
+08:00:10 [INFO] ==================================================
+08:00:10 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:10 [INFO] [zimmo] Page 1: 6 listings
+08:00:13 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:13 [INFO] [zimmo] Page 2: 6 listings
+08:00:17 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:17 [INFO] [zimmo] Page 3: 6 listings
+08:00:17 [INFO] [zimmo] ✅ Found 18 listings
+08:00:17 [INFO] 
+==================================================
+08:00:17 [INFO] Scraping immoscoop...
+08:00:17 [INFO] ==================================================
+08:00:17 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:18 [INFO] [immoscoop] Trying alternative URL
+08:00:22 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:23 [INFO] [immoscoop] No more results on page 1
+08:00:23 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:23 [INFO] 
+Total listings scraped: 37
+08:00:23 [INFO] New listings after deduplication: 8 (filtered 29 duplicates/previously emailed)
+08:00:23 [INFO] 
+Enriching listings...
+08:00:23 [INFO] Enriching immoweb:21449935...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:23 [INFO] Enriching immoweb:21656894...
+08:00:26 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21656894
+08:00:26 [INFO] Enriching immoweb:21553855...
+08:00:28 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:29 [INFO] Enriching immoweb:21541060...
+08:00:32 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:32 [INFO] Enriching immoweb:21535844...
+08:00:36 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21535844
+08:00:36 [INFO] Enriching immoweb:21460551...
+08:00:39 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:39 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:39 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LMOD4/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:40 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:43 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LKXF3/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:43 [INFO] Proximity filter kept 1/8 listings
+08:00:43 [INFO] 
+AI text scoring...
+08:00:43 [INFO] ✅ Groq client initialized
+08:00:43 [INFO] [text_scorer] Scoring 1 listings...
+08:00:44 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:44 [INFO] [text_scorer] (1/1) immoweb:21656894 → 8.0/10
+08:00:44 [INFO] 
+Photo scoring disabled by configuration
+08:00:44 [INFO] 
+============================================================
+08:00:44 [INFO] DAILY RESULTS - 1 new listings ranked
+08:00:44 [INFO] ============================================================
+08:00:44 [INFO] #1 [8.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 795/mo - 9620 Zottegem (immoweb)
+08:00:44 [INFO]     The apartment is described as 'NEW' and features a 'modern' bathroom, 'open kitchen' and 'high ceilings', indicating a modern and renovated finish, but lacks specific details on heating system, solar panels, and parking. | no location preference matches
+08:00:44 [INFO] 
+Sending daily digest...
+08:00:44 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:46 [INFO] Email sent successfully
+08:00:46 [INFO] 
+Done in 44.1s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-06-21 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 20 ids, 25 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 19 listings
+08:00:02 [INFO] [immoweb] Page 1: 19 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] Found 30 card elements on page
+08:00:09 [INFO] [immoweb] No more results on page 2
+08:00:09 [INFO] [immoweb] ✅ Found 19 listings
+08:00:09 [INFO] 
+==================================================
+08:00:09 [INFO] Scraping zimmo...
+08:00:09 [INFO] ==================================================
+08:00:09 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:10 [INFO] [zimmo] Page 1: 6 listings
+08:00:13 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:13 [INFO] [zimmo] Page 2: 6 listings
+08:00:15 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:15 [INFO] [zimmo] Page 3: 6 listings
+08:00:15 [INFO] [zimmo] ✅ Found 18 listings
+08:00:15 [INFO] 
+==================================================
+08:00:15 [INFO] Scraping immoscoop...
+08:00:15 [INFO] ==================================================
+08:00:15 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:16 [INFO] [immoscoop] Trying alternative URL
+08:00:20 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:20 [INFO] [immoscoop] No more results on page 1
+08:00:20 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:20 [INFO] 
+Total listings scraped: 37
+08:00:20 [INFO] New listings after deduplication: 7 (filtered 30 duplicates/previously emailed)
+08:00:20 [INFO] 
+Enriching listings...
+08:00:20 [INFO] Enriching immoweb:21449935...
+08:00:20 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:21 [INFO] Enriching immoweb:21553855...
+08:00:24 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:24 [INFO] Enriching immoweb:21541060...
+08:00:27 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:27 [INFO] Enriching immoweb:21535844...
+08:00:29 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21535844
+08:00:30 [INFO] Enriching immoweb:21460551...
+08:00:32 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:33 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:33 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LMOD4/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:33 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:36 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LKXF3/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:36 [INFO] Proximity filter kept 0/7 listings
+08:00:36 [INFO] 
+AI text scoring...
+08:00:37 [INFO] ✅ Groq client initialized
+08:00:37 [INFO] [text_scorer] Scoring 0 listings...
+08:00:37 [INFO] 
+Photo scoring disabled by configuration
+08:00:37 [INFO] 
+============================================================
+08:00:37 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:37 [INFO] ============================================================
+08:00:37 [INFO] No listings to show
+08:00:37 [INFO] 
+Sending daily digest...
+08:00:37 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:38 [INFO] Email sent successfully
+08:00:38 [INFO] 
+Done in 36.4s
+08:00:02 [INFO] Apartment Hunter starting...
+08:00:02 [INFO] Timestamp: 2026-06-22 08:00:02
+08:00:02 [INFO] Mode: full
+08:00:02 [INFO] Previously emailed listings: 20 ids, 25 fingerprints
+08:00:02 [INFO] 
+==================================================
+08:00:02 [INFO] Scraping immoweb...
+08:00:02 [INFO] ==================================================
+08:00:02 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 19 listings
+08:00:02 [INFO] [immoweb] Page 1: 19 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] Found 30 card elements on page
+08:00:09 [INFO] [immoweb] No more results on page 2
+08:00:09 [INFO] [immoweb] ✅ Found 19 listings
+08:00:09 [INFO] 
+==================================================
+08:00:09 [INFO] Scraping zimmo...
+08:00:09 [INFO] ==================================================
+08:00:09 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:10 [INFO] [zimmo] Page 1: 6 listings
+08:00:13 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:13 [INFO] [zimmo] Page 2: 6 listings
+08:00:16 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:16 [INFO] [zimmo] Page 3: 6 listings
+08:00:16 [INFO] [zimmo] ✅ Found 18 listings
+08:00:16 [INFO] 
+==================================================
+08:00:16 [INFO] Scraping immoscoop...
+08:00:16 [INFO] ==================================================
+08:00:16 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:17 [INFO] [immoscoop] Trying alternative URL
+08:00:20 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:21 [INFO] [immoscoop] No more results on page 1
+08:00:21 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:21 [INFO] 
+Total listings scraped: 37
+08:00:21 [INFO] New listings after deduplication: 7 (filtered 30 duplicates/previously emailed)
+08:00:21 [INFO] 
+Enriching listings...
+08:00:21 [INFO] Enriching immoweb:21449935...
+08:00:21 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:21 [INFO] Enriching immoweb:21553855...
+08:00:24 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:24 [INFO] Enriching immoweb:21541060...
+08:00:27 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:28 [INFO] Enriching immoweb:21535844...
+08:00:31 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21535844
+08:00:31 [INFO] Enriching immoweb:21460551...
+08:00:33 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:34 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:34 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LMOD4/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:34 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:38 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LKXF3/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:38 [INFO] Proximity filter kept 0/7 listings
+08:00:38 [INFO] 
+AI text scoring...
+08:00:38 [INFO] ✅ Groq client initialized
+08:00:38 [INFO] [text_scorer] Scoring 0 listings...
+08:00:38 [INFO] 
+Photo scoring disabled by configuration
+08:00:38 [INFO] 
+============================================================
+08:00:38 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:38 [INFO] ============================================================
+08:00:38 [INFO] No listings to show
+08:00:38 [INFO] 
+Sending daily digest...
+08:00:38 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:39 [INFO] Email sent successfully
+08:00:39 [INFO] 
+Done in 37.6s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-06-23 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 20 ids, 25 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 19 listings
+08:00:02 [INFO] [immoweb] Page 1: 19 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] Found 30 card elements on page
+08:00:09 [INFO] [immoweb] No more results on page 2
+08:00:09 [INFO] [immoweb] ✅ Found 19 listings
+08:00:09 [INFO] 
+==================================================
+08:00:09 [INFO] Scraping zimmo...
+08:00:09 [INFO] ==================================================
+08:00:09 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 5 listings
+08:00:13 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:13 [INFO] [zimmo] Page 2: 5 listings
+08:00:16 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:16 [INFO] [zimmo] Page 3: 5 listings
+08:00:16 [INFO] [zimmo] ✅ Found 15 listings
+08:00:16 [INFO] 
+==================================================
+08:00:16 [INFO] Scraping immoscoop...
+08:00:16 [INFO] ==================================================
+08:00:16 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:17 [INFO] [immoscoop] Trying alternative URL
+08:00:21 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:22 [INFO] [immoscoop] No more results on page 1
+08:00:22 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:22 [INFO] 
+Total listings scraped: 34
+08:00:22 [INFO] New listings after deduplication: 6 (filtered 28 duplicates/previously emailed)
+08:00:22 [INFO] 
+Enriching listings...
+08:00:22 [INFO] Enriching immoweb:21449935...
+08:00:22 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:22 [INFO] Enriching immoweb:21553855...
+08:00:25 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:26 [INFO] Enriching immoweb:21541060...
+08:00:29 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:29 [INFO] Enriching immoweb:21535844...
+08:00:32 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21535844
+08:00:32 [INFO] Enriching immoweb:21460551...
+08:00:35 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:35 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:35 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LKXF3/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:36 [INFO] Proximity filter kept 0/6 listings
+08:00:36 [INFO] 
+AI text scoring...
+08:00:36 [INFO] ✅ Groq client initialized
+08:00:36 [INFO] [text_scorer] Scoring 0 listings...
+08:00:36 [INFO] 
+Photo scoring disabled by configuration
+08:00:36 [INFO] 
+============================================================
+08:00:36 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:36 [INFO] ============================================================
+08:00:36 [INFO] No listings to show
+08:00:36 [INFO] 
+Sending daily digest...
+08:00:36 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:37 [INFO] Email sent successfully
+08:00:37 [INFO] 
+Done in 36.1s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-06-24 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 20 ids, 25 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 19 listings
+08:00:02 [INFO] [immoweb] Page 1: 19 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 19 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 5 listings
+08:00:12 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 5 listings
+08:00:15 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:15 [INFO] [zimmo] Page 3: 5 listings
+08:00:15 [INFO] [zimmo] ✅ Found 15 listings
+08:00:15 [INFO] 
+==================================================
+08:00:15 [INFO] Scraping immoscoop...
+08:00:15 [INFO] ==================================================
+08:00:15 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:16 [INFO] [immoscoop] Trying alternative URL
+08:00:19 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:20 [INFO] [immoscoop] No more results on page 1
+08:00:20 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:20 [INFO] 
+Total listings scraped: 34
+08:00:20 [INFO] New listings after deduplication: 6 (filtered 28 duplicates/previously emailed)
+08:00:20 [INFO] 
+Enriching listings...
+08:00:20 [INFO] Enriching immoweb:21449935...
+08:00:20 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:20 [INFO] Enriching immoweb:21553855...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:24 [INFO] Enriching immoweb:21541060...
+08:00:26 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:27 [INFO] Enriching immoweb:21535844...
+08:00:29 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21535844
+08:00:29 [INFO] Enriching immoweb:21460551...
+08:00:32 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:32 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:32 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LKXF3/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:32 [INFO] Proximity filter kept 0/6 listings
+08:00:32 [INFO] 
+AI text scoring...
+08:00:33 [INFO] ✅ Groq client initialized
+08:00:33 [INFO] [text_scorer] Scoring 0 listings...
+08:00:33 [INFO] 
+Photo scoring disabled by configuration
+08:00:33 [INFO] 
+============================================================
+08:00:33 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:33 [INFO] ============================================================
+08:00:33 [INFO] No listings to show
+08:00:33 [INFO] 
+Sending daily digest...
+08:00:33 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:34 [INFO] Email sent successfully
+08:00:34 [INFO] 
+Done in 33.4s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-06-25 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 20 ids, 25 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 19 listings
+08:00:02 [INFO] [immoweb] Page 1: 19 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] Found 30 card elements on page
+08:00:09 [INFO] [immoweb] No more results on page 2
+08:00:09 [INFO] [immoweb] ✅ Found 19 listings
+08:00:09 [INFO] 
+==================================================
+08:00:09 [INFO] Scraping zimmo...
+08:00:09 [INFO] ==================================================
+08:00:09 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 5 listings
+08:00:12 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 5 listings
+08:00:15 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:15 [INFO] [zimmo] Page 3: 5 listings
+08:00:15 [INFO] [zimmo] ✅ Found 15 listings
+08:00:15 [INFO] 
+==================================================
+08:00:15 [INFO] Scraping immoscoop...
+08:00:15 [INFO] ==================================================
+08:00:15 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:16 [INFO] [immoscoop] Trying alternative URL
+08:00:20 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:21 [INFO] [immoscoop] No more results on page 1
+08:00:21 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:21 [INFO] 
+Total listings scraped: 34
+08:00:21 [INFO] New listings after deduplication: 6 (filtered 28 duplicates/previously emailed)
+08:00:21 [INFO] 
+Enriching listings...
+08:00:21 [INFO] Enriching immoweb:21449935...
+08:00:21 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:21 [INFO] Enriching immoweb:21553855...
+08:00:24 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:25 [INFO] Enriching immoweb:21541060...
+08:00:28 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:28 [INFO] Enriching immoweb:21535844...
+08:00:31 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21535844
+08:00:31 [INFO] Enriching immoweb:21460551...
+08:00:34 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:34 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:34 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LKXF3/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:34 [INFO] Proximity filter kept 0/6 listings
+08:00:34 [INFO] 
+AI text scoring...
+08:00:35 [INFO] ✅ Groq client initialized
+08:00:35 [INFO] [text_scorer] Scoring 0 listings...
+08:00:35 [INFO] 
+Photo scoring disabled by configuration
+08:00:35 [INFO] 
+============================================================
+08:00:35 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:35 [INFO] ============================================================
+08:00:35 [INFO] No listings to show
+08:00:35 [INFO] 
+Sending daily digest...
+08:00:35 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:36 [INFO] Email sent successfully
+08:00:36 [INFO] 
+Done in 35.1s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-06-26 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 20 ids, 25 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:01 [INFO] [immoweb] API returned 19 listings
+08:00:01 [INFO] [immoweb] Page 1: 19 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 19 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 5 listings
+08:00:11 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:11 [INFO] [zimmo] Page 2: 5 listings
+08:00:15 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:15 [INFO] [zimmo] Page 3: 5 listings
+08:00:15 [INFO] [zimmo] ✅ Found 15 listings
+08:00:15 [INFO] 
+==================================================
+08:00:15 [INFO] Scraping immoscoop...
+08:00:15 [INFO] ==================================================
+08:00:15 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:16 [INFO] [immoscoop] Trying alternative URL
+08:00:20 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:20 [INFO] [immoscoop] No more results on page 1
+08:00:20 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:20 [INFO] 
+Total listings scraped: 34
+08:00:20 [INFO] New listings after deduplication: 6 (filtered 28 duplicates/previously emailed)
+08:00:20 [INFO] 
+Enriching listings...
+08:00:20 [INFO] Enriching immoweb:21449935...
+08:00:20 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:20 [INFO] Enriching immoweb:21553855...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:23 [INFO] Enriching immoweb:21541060...
+08:00:27 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:27 [INFO] Enriching immoweb:21535844...
+08:00:30 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21535844
+08:00:30 [INFO] Enriching immoweb:21460551...
+08:00:33 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:33 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:33 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LKXF3/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:34 [INFO] Proximity filter kept 0/6 listings
+08:00:34 [INFO] 
+AI text scoring...
+08:00:34 [INFO] ✅ Groq client initialized
+08:00:34 [INFO] [text_scorer] Scoring 0 listings...
+08:00:34 [INFO] 
+Photo scoring disabled by configuration
+08:00:34 [INFO] 
+============================================================
+08:00:34 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:34 [INFO] ============================================================
+08:00:34 [INFO] No listings to show
+08:00:34 [INFO] 
+Sending daily digest...
+08:00:34 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:35 [INFO] Email sent successfully
+08:00:35 [INFO] 
+============================================================
+08:00:35 [INFO] WEEKLY TOP 10 - Week 26 of 2026
+08:00:35 [INFO] ============================================================
+08:00:35 [INFO] No listings to show
+08:00:35 [INFO] 
+Sending weekly digest...
+08:00:35 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:36 [INFO] Email sent successfully
+08:00:36 [INFO] 
+Done in 35.2s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-06-27 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 20 ids, 25 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:01 [INFO] [immoweb] API returned 18 listings
+08:00:01 [INFO] [immoweb] Page 1: 18 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:07 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 28 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 18 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:08 [INFO] [zimmo] Page 1: 5 listings
+08:00:10 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:11 [INFO] [zimmo] Page 2: 5 listings
+08:00:14 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:14 [INFO] [zimmo] Page 3: 5 listings
+08:00:14 [INFO] [zimmo] ✅ Found 15 listings
+08:00:14 [INFO] 
+==================================================
+08:00:14 [INFO] Scraping immoscoop...
+08:00:14 [INFO] ==================================================
+08:00:14 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:15 [INFO] [immoscoop] Trying alternative URL
+08:00:19 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:19 [INFO] [immoscoop] No more results on page 1
+08:00:19 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:19 [INFO] 
+Total listings scraped: 33
+08:00:19 [INFO] New listings after deduplication: 6 (filtered 27 duplicates/previously emailed)
+08:00:19 [INFO] 
+Enriching listings...
+08:00:19 [INFO] Enriching immoweb:21449935...
+08:00:19 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:20 [INFO] Enriching immoweb:21553855...
+08:00:22 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:22 [INFO] Enriching immoweb:21541060...
+08:00:26 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:26 [INFO] Enriching immoweb:21535844...
+08:00:30 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21535844
+08:00:30 [INFO] Enriching immoweb:21460551...
+08:00:34 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:34 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:34 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LKXF3/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:34 [INFO] Proximity filter kept 0/6 listings
+08:00:34 [INFO] 
+AI text scoring...
+08:00:34 [INFO] ✅ Groq client initialized
+08:00:34 [INFO] [text_scorer] Scoring 0 listings...
+08:00:34 [INFO] 
+Photo scoring disabled by configuration
+08:00:34 [INFO] 
+============================================================
+08:00:34 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:34 [INFO] ============================================================
+08:00:34 [INFO] No listings to show
+08:00:34 [INFO] 
+Sending daily digest...
+08:00:34 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:36 [INFO] Email sent successfully
+08:00:36 [INFO] 
+Done in 34.6s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-08 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 20 ids, 25 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 18 listings
+08:00:02 [INFO] [immoweb] Page 1: 18 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 18 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 4 listings
+08:00:11 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:11 [INFO] [zimmo] Page 2: 4 listings
+08:00:15 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:15 [INFO] [zimmo] Page 3: 4 listings
+08:00:15 [INFO] [zimmo] ✅ Found 12 listings
+08:00:15 [INFO] 
+==================================================
+08:00:15 [INFO] Scraping immoscoop...
+08:00:15 [INFO] ==================================================
+08:00:15 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:15 [INFO] [immoscoop] Trying alternative URL
+08:00:19 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:19 [INFO] [immoscoop] No more results on page 1
+08:00:19 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:19 [INFO] 
+Total listings scraped: 30
+08:00:19 [INFO] New listings after deduplication: 10 (filtered 20 duplicates/previously emailed)
+08:00:19 [INFO] 
+Enriching listings...
+08:00:19 [INFO] Enriching immoweb:21695925...
+08:00:19 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21695925
+08:00:20 [INFO] Enriching immoweb:21688693...
+08:00:22 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21688693
+08:00:22 [INFO] Enriching immoweb:21687866...
+08:00:25 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21687866
+08:00:25 [INFO] Enriching immoweb:21687786...
+08:00:29 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21687786
+08:00:29 [INFO] Enriching immoweb:21449935...
+08:00:33 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:33 [INFO] Enriching immoweb:21553855...
+08:00:36 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:36 [INFO] Enriching immoweb:21541060...
+08:00:39 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:39 [INFO] Enriching immoweb:21460551...
+08:00:43 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:43 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:43 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LOMG5/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:43 [INFO] Enriching zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3...
+08:00:46 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/LKXF3/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:47 [INFO] Proximity filter kept 5/10 listings
+08:00:47 [INFO] 
+AI text scoring...
+08:00:47 [INFO] ✅ Groq client initialized
+08:00:47 [INFO] [text_scorer] Scoring 5 listings...
+08:00:48 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:49 [INFO] [text_scorer] (1/5) immoweb:21695925 → 6.0/10
+08:00:50 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:51 [INFO] [text_scorer] (2/5) immoweb:21688693 → 5.0/10
+08:00:51 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:52 [INFO] [text_scorer] (3/5) immoweb:21687866 → 9.0/10
+08:00:52 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:53 [INFO] [text_scorer] (4/5) immoweb:21687786 → 5.0/10
+08:00:54 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:54 [INFO] [text_scorer] (5/5) zimmo:?priceMin=750&priceMax=1100&roomsMin=2&page=3 → 3.0/10
+08:00:54 [INFO] 
+Photo scoring disabled by configuration
+08:00:54 [INFO] 
+============================================================
+08:00:54 [INFO] DAILY RESULTS - 5 new listings ranked
+08:00:54 [INFO] ============================================================
+08:00:54 [INFO] #1 [9.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 955/mo - 9620 Zottegem (immoweb)
+08:00:54 [INFO]     The apartment is described as a new-build project with modern and energy-efficient features, including a fully equipped kitchen, underfloor heating, and quality appliances, indicating a high level of modernity. | no location preference matches
+08:00:54 [INFO] #2 [6.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 900/mo - 9620 Zottegem (immoweb)
+08:00:54 [INFO]     The apartment has a relatively good EPC label (B), but the limited description does not provide enough information to suggest a high level of modernity, so it scores average. | no location preference matches
+08:00:54 [INFO] #3 [5.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 950/mo - 9620 Zottegem (immoweb)
+08:00:54 [INFO]     The listing lacks detailed information, but being in a residential area like Zottegem and having a moderate surface of 110m² might suggest some modern elements, yet without specific modern features mentioned, it scores average. | no location preference matches
+08:00:54 [INFO] #4 [5.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 785/mo - 9620 Zottegem (immoweb)
+08:00:54 [INFO]     The listing lacks detailed information, but the location in a residential area like Zottegem and the relatively modest surface of 89m² might suggest an average, potentially older apartment, scoring around the middle for modernity. | no location preference matches
+08:00:54 [INFO] #5 [3.0/10] Appartement te huur - EUR 795/mo - Heldenlaan 329620 Zottegem (zimmo)
+08:00:54 [INFO]     The listing lacks any description of the apartment's features, finishes, or condition, and does not provide enough information to determine its modernity, resulting in a low score. | no location preference matches
+08:00:54 [INFO] 
+Sending daily digest...
+08:00:54 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:55 [INFO] Email sent successfully
+08:00:55 [INFO] 
+Done in 53.9s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-09 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:01 [INFO] [immoweb] API returned 17 listings
+08:00:01 [INFO] [immoweb] Page 1: 17 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 17 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 3 listings
+08:00:12 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 3 listings
+08:00:15 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:16 [INFO] [zimmo] Page 3: 3 listings
+08:00:16 [INFO] [zimmo] ✅ Found 9 listings
+08:00:16 [INFO] 
+==================================================
+08:00:16 [INFO] Scraping immoscoop...
+08:00:16 [INFO] ==================================================
+08:00:16 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:16 [INFO] [immoscoop] Trying alternative URL
+08:00:20 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:20 [INFO] [immoscoop] No more results on page 1
+08:00:20 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:20 [INFO] 
+Total listings scraped: 26
+08:00:20 [INFO] New listings after deduplication: 4 (filtered 22 duplicates/previously emailed)
+08:00:20 [INFO] 
+Enriching listings...
+08:00:20 [INFO] Enriching immoweb:21449935...
+08:00:20 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:21 [INFO] Enriching immoweb:21553855...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:23 [INFO] Enriching immoweb:21541060...
+08:00:26 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:27 [INFO] Enriching immoweb:21460551...
+08:00:29 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:30 [INFO] Proximity filter kept 0/4 listings
+08:00:30 [INFO] 
+AI text scoring...
+08:00:30 [INFO] ✅ Groq client initialized
+08:00:30 [INFO] [text_scorer] Scoring 0 listings...
+08:00:30 [INFO] 
+Photo scoring disabled by configuration
+08:00:30 [INFO] 
+============================================================
+08:00:30 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:30 [INFO] ============================================================
+08:00:30 [INFO] No listings to show
+08:00:30 [INFO] 
+Sending daily digest...
+08:00:30 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:34 [INFO] Email sent successfully
+08:00:34 [INFO] 
+Done in 32.8s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-10 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 18 listings
+08:00:02 [INFO] [immoweb] Page 1: 18 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 18 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:08 [INFO] [zimmo] Page 1: 4 listings
+08:00:12 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 4 listings
+08:00:16 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:16 [INFO] [zimmo] Page 3: 4 listings
+08:00:16 [INFO] [zimmo] ✅ Found 12 listings
+08:00:16 [INFO] 
+==================================================
+08:00:16 [INFO] Scraping immoscoop...
+08:00:16 [INFO] ==================================================
+08:00:16 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:16 [INFO] [immoscoop] Trying alternative URL
+08:00:20 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:20 [INFO] [immoscoop] No more results on page 1
+08:00:20 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:20 [INFO] 
+Total listings scraped: 30
+08:00:20 [INFO] New listings after deduplication: 5 (filtered 25 duplicates/previously emailed)
+08:00:20 [INFO] 
+Enriching listings...
+08:00:20 [INFO] Enriching immoweb:21701868...
+08:00:20 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21701868
+08:00:21 [INFO] Enriching immoweb:21449935...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:23 [INFO] Enriching immoweb:21553855...
+08:00:26 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:26 [INFO] Enriching immoweb:21541060...
+08:00:29 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:30 [INFO] Enriching immoweb:21460551...
+08:00:33 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:33 [INFO] Proximity filter kept 0/5 listings
+08:00:33 [INFO] 
+AI text scoring...
+08:00:33 [INFO] ✅ Groq client initialized
+08:00:33 [INFO] [text_scorer] Scoring 0 listings...
+08:00:33 [INFO] 
+Photo scoring disabled by configuration
+08:00:33 [INFO] 
+============================================================
+08:00:33 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:33 [INFO] ============================================================
+08:00:33 [INFO] No listings to show
+08:00:33 [INFO] 
+Sending daily digest...
+08:00:33 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:35 [INFO] Email sent successfully
+08:00:35 [INFO] 
+============================================================
+08:00:35 [INFO] WEEKLY TOP 10 - Week 28 of 2026
+08:00:35 [INFO] ============================================================
+08:00:35 [INFO] #1 [9.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 955/mo - 9620 Zottegem (immoweb)
+08:00:35 [INFO]     The apartment is described as a new-build project with modern and energy-efficient features, including a fully equipped kitchen, underfloor heating, and quality appliances, indicating a high level of modernity. | no location preference matches
+08:00:35 [INFO] #2 [6.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 900/mo - 9620 Zottegem (immoweb)
+08:00:35 [INFO]     The apartment has a relatively good EPC label (B), but the limited description does not provide enough information to suggest a high level of modernity, so it scores average. | no location preference matches
+08:00:35 [INFO] #3 [5.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 950/mo - 9620 Zottegem (immoweb)
+08:00:35 [INFO]     The listing lacks detailed information, but being in a residential area like Zottegem and having a moderate surface of 110m² might suggest some modern elements, yet without specific modern features mentioned, it scores average. | no location preference matches
+08:00:35 [INFO] #4 [5.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 785/mo - 9620 Zottegem (immoweb)
+08:00:35 [INFO]     The listing lacks detailed information, but the location in a residential area like Zottegem and the relatively modest surface of 89m² might suggest an average, potentially older apartment, scoring around the middle for modernity. | no location preference matches
+08:00:35 [INFO] #5 [3.0/10] Appartement te huur - EUR 795/mo - Heldenlaan 329620 Zottegem (zimmo)
+08:00:35 [INFO]     The listing lacks any description of the apartment's features, finishes, or condition, and does not provide enough information to determine its modernity, resulting in a low score. | no location preference matches
+08:00:35 [INFO] 
+Sending weekly digest...
+08:00:35 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:36 [INFO] Email sent successfully
+08:00:36 [INFO] 
+Done in 34.6s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-11 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 17 listings
+08:00:02 [INFO] [immoweb] Page 1: 17 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] Found 30 card elements on page
+08:00:09 [INFO] [immoweb] No more results on page 2
+08:00:09 [INFO] [immoweb] ✅ Found 17 listings
+08:00:09 [INFO] 
+==================================================
+08:00:09 [INFO] Scraping zimmo...
+08:00:09 [INFO] ==================================================
+08:00:09 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:10 [INFO] [zimmo] Page 1: 4 listings
+08:00:13 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:13 [INFO] [zimmo] Page 2: 4 listings
+08:00:17 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:17 [INFO] [zimmo] Page 3: 4 listings
+08:00:17 [INFO] [zimmo] ✅ Found 12 listings
+08:00:17 [INFO] 
+==================================================
+08:00:17 [INFO] Scraping immoscoop...
+08:00:17 [INFO] ==================================================
+08:00:17 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:18 [INFO] [immoscoop] Trying alternative URL
+08:00:21 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:22 [INFO] [immoscoop] No more results on page 1
+08:00:22 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:22 [INFO] 
+Total listings scraped: 29
+08:00:22 [INFO] New listings after deduplication: 5 (filtered 24 duplicates/previously emailed)
+08:00:22 [INFO] 
+Enriching listings...
+08:00:22 [INFO] Enriching immoweb:21701868...
+08:00:22 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21701868
+08:00:22 [INFO] Enriching immoweb:21449935...
+08:00:26 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:26 [INFO] Enriching immoweb:21553855...
+08:00:29 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:29 [INFO] Enriching immoweb:21541060...
+08:00:32 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:33 [INFO] Enriching immoweb:21460551...
+08:00:36 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:36 [INFO] Proximity filter kept 0/5 listings
+08:00:36 [INFO] 
+AI text scoring...
+08:00:37 [INFO] ✅ Groq client initialized
+08:00:37 [INFO] [text_scorer] Scoring 0 listings...
+08:00:37 [INFO] 
+Photo scoring disabled by configuration
+08:00:37 [INFO] 
+============================================================
+08:00:37 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:37 [INFO] ============================================================
+08:00:37 [INFO] No listings to show
+08:00:37 [INFO] 
+Sending daily digest...
+08:00:37 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:38 [INFO] Email sent successfully
+08:00:38 [INFO] 
+Done in 36.3s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-12 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 17 listings
+08:00:02 [INFO] [immoweb] Page 1: 17 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:07 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:07 [INFO] [immoweb] Found 30 card elements on page
+08:00:07 [INFO] [immoweb] No more results on page 2
+08:00:07 [INFO] [immoweb] ✅ Found 17 listings
+08:00:07 [INFO] 
+==================================================
+08:00:07 [INFO] Scraping zimmo...
+08:00:07 [INFO] ==================================================
+08:00:07 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:07 [INFO] [zimmo] Page 1: 4 listings
+08:00:10 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:10 [INFO] [zimmo] Page 2: 4 listings
+08:00:12 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:12 [INFO] [zimmo] Page 3: 4 listings
+08:00:12 [INFO] [zimmo] ✅ Found 12 listings
+08:00:12 [INFO] 
+==================================================
+08:00:12 [INFO] Scraping immoscoop...
+08:00:12 [INFO] ==================================================
+08:00:12 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:13 [INFO] [immoscoop] Trying alternative URL
+08:00:17 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:17 [INFO] [immoscoop] No more results on page 1
+08:00:17 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:17 [INFO] 
+Total listings scraped: 29
+08:00:17 [INFO] New listings after deduplication: 5 (filtered 24 duplicates/previously emailed)
+08:00:17 [INFO] 
+Enriching listings...
+08:00:17 [INFO] Enriching immoweb:21701868...
+08:00:17 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21701868
+08:00:18 [INFO] Enriching immoweb:21449935...
+08:00:21 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:21 [INFO] Enriching immoweb:21553855...
+08:00:24 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:24 [INFO] Enriching immoweb:21541060...
+08:00:27 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:28 [INFO] Enriching immoweb:21460551...
+08:00:31 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:32 [INFO] Proximity filter kept 0/5 listings
+08:00:32 [INFO] 
+AI text scoring...
+08:00:32 [INFO] ✅ Groq client initialized
+08:00:32 [INFO] [text_scorer] Scoring 0 listings...
+08:00:32 [INFO] 
+Photo scoring disabled by configuration
+08:00:32 [INFO] 
+============================================================
+08:00:32 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:32 [INFO] ============================================================
+08:00:32 [INFO] No listings to show
+08:00:32 [INFO] 
+Sending daily digest...
+08:00:32 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:34 [INFO] Email sent successfully
+08:00:34 [INFO] 
+Done in 32.4s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-13 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 17 listings
+08:00:02 [INFO] [immoweb] Page 1: 17 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:07 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:07 [INFO] [immoweb] Found 30 card elements on page
+08:00:07 [INFO] [immoweb] No more results on page 2
+08:00:07 [INFO] [immoweb] ✅ Found 17 listings
+08:00:07 [INFO] 
+==================================================
+08:00:07 [INFO] Scraping zimmo...
+08:00:07 [INFO] ==================================================
+08:00:07 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:07 [INFO] [zimmo] Page 1: 4 listings
+08:00:11 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:11 [INFO] [zimmo] Page 2: 4 listings
+08:00:14 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:14 [INFO] [zimmo] Page 3: 4 listings
+08:00:14 [INFO] [zimmo] ✅ Found 12 listings
+08:00:14 [INFO] 
+==================================================
+08:00:14 [INFO] Scraping immoscoop...
+08:00:14 [INFO] ==================================================
+08:00:14 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:15 [INFO] [immoscoop] Trying alternative URL
+08:00:18 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:19 [INFO] [immoscoop] No more results on page 1
+08:00:19 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:19 [INFO] 
+Total listings scraped: 29
+08:00:19 [INFO] New listings after deduplication: 5 (filtered 24 duplicates/previously emailed)
+08:00:19 [INFO] 
+Enriching listings...
+08:00:19 [INFO] Enriching immoweb:21701868...
+08:00:19 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21701868
+08:00:19 [INFO] Enriching immoweb:21449935...
+08:00:22 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:22 [INFO] Enriching immoweb:21553855...
+08:00:25 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:26 [INFO] Enriching immoweb:21541060...
+08:00:29 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:30 [INFO] Enriching immoweb:21460551...
+08:00:32 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:33 [INFO] Proximity filter kept 0/5 listings
+08:00:33 [INFO] 
+AI text scoring...
+08:00:33 [INFO] ✅ Groq client initialized
+08:00:33 [INFO] [text_scorer] Scoring 0 listings...
+08:00:33 [INFO] 
+Photo scoring disabled by configuration
+08:00:33 [INFO] 
+============================================================
+08:00:33 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:33 [INFO] ============================================================
+08:00:33 [INFO] No listings to show
+08:00:33 [INFO] 
+Sending daily digest...
+08:00:33 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:34 [INFO] Email sent successfully
+08:00:34 [INFO] 
+Done in 33.1s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-14 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:01 [INFO] [immoweb] API returned 16 listings
+08:00:01 [INFO] [immoweb] Page 1: 16 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 16 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 3 listings
+08:00:12 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:13 [INFO] [zimmo] Page 2: 3 listings
+08:00:16 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:16 [INFO] [zimmo] Page 3: 3 listings
+08:00:16 [INFO] [zimmo] ✅ Found 9 listings
+08:00:16 [INFO] 
+==================================================
+08:00:16 [INFO] Scraping immoscoop...
+08:00:16 [INFO] ==================================================
+08:00:16 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:17 [INFO] [immoscoop] Trying alternative URL
+08:00:20 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:21 [INFO] [immoscoop] No more results on page 1
+08:00:21 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:21 [INFO] 
+Total listings scraped: 25
+08:00:21 [INFO] New listings after deduplication: 5 (filtered 20 duplicates/previously emailed)
+08:00:21 [INFO] 
+Enriching listings...
+08:00:21 [INFO] Enriching immoweb:21701868...
+08:00:21 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21701868
+08:00:21 [INFO] Enriching immoweb:21449935...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:24 [INFO] Enriching immoweb:21553855...
+08:00:27 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:28 [INFO] Enriching immoweb:21541060...
+08:00:31 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:31 [INFO] Enriching immoweb:21460551...
+08:00:34 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:35 [INFO] Proximity filter kept 0/5 listings
+08:00:35 [INFO] 
+AI text scoring...
+08:00:35 [INFO] ✅ Groq client initialized
+08:00:35 [INFO] [text_scorer] Scoring 0 listings...
+08:00:35 [INFO] 
+Photo scoring disabled by configuration
+08:00:35 [INFO] 
+============================================================
+08:00:35 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:35 [INFO] ============================================================
+08:00:35 [INFO] No listings to show
+08:00:35 [INFO] 
+Sending daily digest...
+08:00:35 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:36 [INFO] Email sent successfully
+08:00:36 [INFO] 
+Done in 35.5s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-15 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:01 [INFO] [immoweb] API returned 15 listings
+08:00:01 [INFO] [immoweb] Page 1: 15 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:07 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:07 [INFO] [immoweb] Found 30 card elements on page
+08:00:07 [INFO] [immoweb] No more results on page 2
+08:00:07 [INFO] [immoweb] ✅ Found 15 listings
+08:00:07 [INFO] 
+==================================================
+08:00:07 [INFO] Scraping zimmo...
+08:00:07 [INFO] ==================================================
+08:00:07 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:08 [INFO] [zimmo] Page 1: 3 listings
+08:00:10 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:11 [INFO] [zimmo] Page 2: 3 listings
+08:00:13 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:14 [INFO] [zimmo] Page 3: 3 listings
+08:00:14 [INFO] [zimmo] ✅ Found 9 listings
+08:00:14 [INFO] 
+==================================================
+08:00:14 [INFO] Scraping immoscoop...
+08:00:14 [INFO] ==================================================
+08:00:14 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:14 [INFO] [immoscoop] Trying alternative URL
+08:00:18 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:18 [INFO] [immoscoop] No more results on page 1
+08:00:18 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:18 [INFO] 
+Total listings scraped: 24
+08:00:18 [INFO] New listings after deduplication: 4 (filtered 20 duplicates/previously emailed)
+08:00:18 [INFO] 
+Enriching listings...
+08:00:18 [INFO] Enriching immoweb:21449935...
+08:00:18 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:18 [INFO] Enriching immoweb:21553855...
+08:00:21 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:22 [INFO] Enriching immoweb:21541060...
+08:00:24 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:25 [INFO] Enriching immoweb:21460551...
+08:00:28 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:28 [INFO] Proximity filter kept 0/4 listings
+08:00:28 [INFO] 
+AI text scoring...
+08:00:28 [INFO] ✅ Groq client initialized
+08:00:28 [INFO] [text_scorer] Scoring 0 listings...
+08:00:28 [INFO] 
+Photo scoring disabled by configuration
+08:00:28 [INFO] 
+============================================================
+08:00:28 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:28 [INFO] ============================================================
+08:00:28 [INFO] No listings to show
+08:00:28 [INFO] 
+Sending daily digest...
+08:00:28 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:31 [INFO] Email sent successfully
+08:00:31 [INFO] 
+Done in 29.8s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-16 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 14 listings
+08:00:02 [INFO] [immoweb] Page 1: 14 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:07 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 14 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:08 [INFO] [zimmo] Page 1: 2 listings
+08:00:11 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:11 [INFO] [zimmo] Page 2: 2 listings
+08:00:14 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:15 [INFO] [zimmo] Page 3: 2 listings
+08:00:15 [INFO] [zimmo] ✅ Found 6 listings
+08:00:15 [INFO] 
+==================================================
+08:00:15 [INFO] Scraping immoscoop...
+08:00:15 [INFO] ==================================================
+08:00:15 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:15 [INFO] [immoscoop] Trying alternative URL
+08:00:19 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:20 [INFO] [immoscoop] No more results on page 1
+08:00:20 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:20 [INFO] 
+Total listings scraped: 20
+08:00:20 [INFO] New listings after deduplication: 4 (filtered 16 duplicates/previously emailed)
+08:00:20 [INFO] 
+Enriching listings...
+08:00:20 [INFO] Enriching immoweb:21449935...
+08:00:20 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:20 [INFO] Enriching immoweb:21553855...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21553855
+08:00:23 [INFO] Enriching immoweb:21541060...
+08:00:26 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:27 [INFO] Enriching immoweb:21460551...
+08:00:30 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:30 [INFO] Proximity filter kept 0/4 listings
+08:00:30 [INFO] 
+AI text scoring...
+08:00:30 [INFO] ✅ Groq client initialized
+08:00:30 [INFO] [text_scorer] Scoring 0 listings...
+08:00:30 [INFO] 
+Photo scoring disabled by configuration
+08:00:30 [INFO] 
+============================================================
+08:00:30 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:30 [INFO] ============================================================
+08:00:30 [INFO] No listings to show
+08:00:30 [INFO] 
+Sending daily digest...
+08:00:30 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:32 [INFO] Email sent successfully
+08:00:32 [INFO] 
+Done in 31.2s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-17 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:01 [INFO] [immoweb] API returned 13 listings
+08:00:01 [INFO] [immoweb] Page 1: 13 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:07 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 13 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:08 [INFO] [zimmo] Page 1: 2 listings
+08:00:11 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:11 [INFO] [zimmo] Page 2: 2 listings
+08:00:15 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:15 [INFO] [zimmo] Page 3: 2 listings
+08:00:15 [INFO] [zimmo] ✅ Found 6 listings
+08:00:15 [INFO] 
+==================================================
+08:00:15 [INFO] Scraping immoscoop...
+08:00:15 [INFO] ==================================================
+08:00:15 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:16 [INFO] [immoscoop] Trying alternative URL
+08:00:19 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:19 [INFO] [immoscoop] No more results on page 1
+08:00:19 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:19 [INFO] 
+Total listings scraped: 19
+08:00:19 [INFO] New listings after deduplication: 3 (filtered 16 duplicates/previously emailed)
+08:00:19 [INFO] 
+Enriching listings...
+08:00:19 [INFO] Enriching immoweb:21449935...
+08:00:19 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:20 [INFO] Enriching immoweb:21541060...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:24 [INFO] Enriching immoweb:21460551...
+08:00:26 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:26 [INFO] Proximity filter kept 0/3 listings
+08:00:26 [INFO] 
+AI text scoring...
+08:00:26 [INFO] ✅ Groq client initialized
+08:00:26 [INFO] [text_scorer] Scoring 0 listings...
+08:00:26 [INFO] 
+Photo scoring disabled by configuration
+08:00:26 [INFO] 
+============================================================
+08:00:26 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:26 [INFO] ============================================================
+08:00:26 [INFO] No listings to show
+08:00:26 [INFO] 
+Sending daily digest...
+08:00:26 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:28 [INFO] Email sent successfully
+08:00:28 [INFO] 
+============================================================
+08:00:28 [INFO] WEEKLY TOP 10 - Week 29 of 2026
+08:00:28 [INFO] ============================================================
+08:00:28 [INFO] No listings to show
+08:00:28 [INFO] 
+Sending weekly digest...
+08:00:28 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:31 [INFO] Email sent successfully
+08:00:31 [INFO] 
+Done in 30.0s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-18 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 13 listings
+08:00:02 [INFO] [immoweb] Page 1: 13 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] Found 30 card elements on page
+08:00:09 [INFO] [immoweb] No more results on page 2
+08:00:09 [INFO] [immoweb] ✅ Found 13 listings
+08:00:09 [INFO] 
+==================================================
+08:00:09 [INFO] Scraping zimmo...
+08:00:09 [INFO] ==================================================
+08:00:09 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 2 listings
+08:00:12 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 2 listings
+08:00:16 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:16 [INFO] [zimmo] Page 3: 2 listings
+08:00:16 [INFO] [zimmo] ✅ Found 6 listings
+08:00:16 [INFO] 
+==================================================
+08:00:16 [INFO] Scraping immoscoop...
+08:00:16 [INFO] ==================================================
+08:00:16 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:17 [INFO] [immoscoop] Trying alternative URL
+08:00:20 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:21 [INFO] [immoscoop] No more results on page 1
+08:00:21 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:21 [INFO] 
+Total listings scraped: 19
+08:00:21 [INFO] New listings after deduplication: 4 (filtered 15 duplicates/previously emailed)
+08:00:21 [INFO] 
+Enriching listings...
+08:00:21 [INFO] Enriching immoweb:21718295...
+08:00:21 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21718295
+08:00:21 [INFO] Enriching immoweb:21449935...
+08:00:24 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:25 [INFO] Enriching immoweb:21541060...
+08:00:27 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:28 [INFO] Enriching immoweb:21460551...
+08:00:30 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:31 [INFO] Proximity filter kept 0/4 listings
+08:00:31 [INFO] 
+AI text scoring...
+08:00:31 [INFO] ✅ Groq client initialized
+08:00:31 [INFO] [text_scorer] Scoring 0 listings...
+08:00:31 [INFO] 
+Photo scoring disabled by configuration
+08:00:31 [INFO] 
+============================================================
+08:00:31 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:31 [INFO] ============================================================
+08:00:31 [INFO] No listings to show
+08:00:31 [INFO] 
+Sending daily digest...
+08:00:31 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:32 [INFO] Email sent successfully
+08:00:32 [INFO] 
+Done in 30.5s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-19 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 13 listings
+08:00:02 [INFO] [immoweb] Page 1: 13 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 13 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 2 listings
+08:00:12 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 2 listings
+08:00:15 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:16 [INFO] [zimmo] Page 3: 2 listings
+08:00:16 [INFO] [zimmo] ✅ Found 6 listings
+08:00:16 [INFO] 
+==================================================
+08:00:16 [INFO] Scraping immoscoop...
+08:00:16 [INFO] ==================================================
+08:00:16 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:16 [INFO] [immoscoop] Trying alternative URL
+08:00:20 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:20 [INFO] [immoscoop] No more results on page 1
+08:00:20 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:20 [INFO] 
+Total listings scraped: 19
+08:00:20 [INFO] New listings after deduplication: 4 (filtered 15 duplicates/previously emailed)
+08:00:20 [INFO] 
+Enriching listings...
+08:00:20 [INFO] Enriching immoweb:21718295...
+08:00:20 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21718295
+08:00:21 [INFO] Enriching immoweb:21449935...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:23 [INFO] Enriching immoweb:21541060...
+08:00:26 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:27 [INFO] Enriching immoweb:21460551...
+08:00:29 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:30 [INFO] Proximity filter kept 0/4 listings
+08:00:30 [INFO] 
+AI text scoring...
+08:00:30 [INFO] ✅ Groq client initialized
+08:00:30 [INFO] [text_scorer] Scoring 0 listings...
+08:00:30 [INFO] 
+Photo scoring disabled by configuration
+08:00:30 [INFO] 
+============================================================
+08:00:30 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:30 [INFO] ============================================================
+08:00:30 [INFO] No listings to show
+08:00:30 [INFO] 
+Sending daily digest...
+08:00:30 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:31 [INFO] Email sent successfully
+08:00:31 [INFO] 
+Done in 29.3s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-20 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 13 listings
+08:00:02 [INFO] [immoweb] Page 1: 13 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] Found 30 card elements on page
+08:00:09 [INFO] [immoweb] No more results on page 2
+08:00:09 [INFO] [immoweb] ✅ Found 13 listings
+08:00:09 [INFO] 
+==================================================
+08:00:09 [INFO] Scraping zimmo...
+08:00:09 [INFO] ==================================================
+08:00:09 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 2 listings
+08:00:13 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:13 [INFO] [zimmo] Page 2: 2 listings
+08:00:16 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:16 [INFO] [zimmo] Page 3: 2 listings
+08:00:16 [INFO] [zimmo] ✅ Found 6 listings
+08:00:16 [INFO] 
+==================================================
+08:00:16 [INFO] Scraping immoscoop...
+08:00:16 [INFO] ==================================================
+08:00:16 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:17 [INFO] [immoscoop] Trying alternative URL
+08:00:21 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:22 [INFO] [immoscoop] No more results on page 1
+08:00:22 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:22 [INFO] 
+Total listings scraped: 19
+08:00:22 [INFO] New listings after deduplication: 4 (filtered 15 duplicates/previously emailed)
+08:00:22 [INFO] 
+Enriching listings...
+08:00:22 [INFO] Enriching immoweb:21718295...
+08:00:22 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21718295
+08:00:22 [INFO] Enriching immoweb:21449935...
+08:00:24 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:25 [INFO] Enriching immoweb:21541060...
+08:00:27 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:28 [INFO] Enriching immoweb:21460551...
+08:00:31 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:31 [INFO] Proximity filter kept 0/4 listings
+08:00:31 [INFO] 
+AI text scoring...
+08:00:31 [INFO] ✅ Groq client initialized
+08:00:31 [INFO] [text_scorer] Scoring 0 listings...
+08:00:31 [INFO] 
+Photo scoring disabled by configuration
+08:00:31 [INFO] 
+============================================================
+08:00:31 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:31 [INFO] ============================================================
+08:00:31 [INFO] No listings to show
+08:00:31 [INFO] 
+Sending daily digest...
+08:00:31 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:33 [INFO] Email sent successfully
+08:00:33 [INFO] 
+Done in 31.4s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-21 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 12 listings
+08:00:02 [INFO] [immoweb] Page 1: 12 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 12 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:08 [INFO] [zimmo] Page 1: 2 listings
+08:00:11 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 2 listings
+08:00:15 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:15 [INFO] [zimmo] Page 3: 2 listings
+08:00:15 [INFO] [zimmo] ✅ Found 6 listings
+08:00:15 [INFO] 
+==================================================
+08:00:15 [INFO] Scraping immoscoop...
+08:00:15 [INFO] ==================================================
+08:00:15 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:16 [INFO] [immoscoop] Trying alternative URL
+08:00:19 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:20 [INFO] [immoscoop] No more results on page 1
+08:00:20 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:20 [INFO] 
+Total listings scraped: 18
+08:00:20 [INFO] New listings after deduplication: 4 (filtered 14 duplicates/previously emailed)
+08:00:20 [INFO] 
+Enriching listings...
+08:00:20 [INFO] Enriching immoweb:21718295...
+08:00:20 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21718295
+08:00:20 [INFO] Enriching immoweb:21449935...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:23 [INFO] Enriching immoweb:21541060...
+08:00:25 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:26 [INFO] Enriching immoweb:21460551...
+08:00:28 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:29 [INFO] Proximity filter kept 0/4 listings
+08:00:29 [INFO] 
+AI text scoring...
+08:00:29 [INFO] ✅ Groq client initialized
+08:00:29 [INFO] [text_scorer] Scoring 0 listings...
+08:00:29 [INFO] 
+Photo scoring disabled by configuration
+08:00:29 [INFO] 
+============================================================
+08:00:29 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:29 [INFO] ============================================================
+08:00:29 [INFO] No listings to show
+08:00:29 [INFO] 
+Sending daily digest...
+08:00:29 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:30 [INFO] Email sent successfully
+08:00:30 [INFO] 
+Done in 28.8s
+08:00:02 [INFO] Apartment Hunter starting...
+08:00:02 [INFO] Timestamp: 2026-07-22 08:00:02
+08:00:02 [INFO] Mode: full
+08:00:02 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:02 [INFO] 
+==================================================
+08:00:02 [INFO] Scraping immoweb...
+08:00:02 [INFO] ==================================================
+08:00:02 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 13 listings
+08:00:02 [INFO] [immoweb] Page 1: 13 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] Found 30 card elements on page
+08:00:09 [INFO] [immoweb] No more results on page 2
+08:00:09 [INFO] [immoweb] ✅ Found 13 listings
+08:00:09 [INFO] 
+==================================================
+08:00:09 [INFO] Scraping zimmo...
+08:00:09 [INFO] ==================================================
+08:00:09 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 2 listings
+08:00:12 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 2 listings
+08:00:16 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:16 [INFO] [zimmo] Page 3: 2 listings
+08:00:16 [INFO] [zimmo] ✅ Found 6 listings
+08:00:16 [INFO] 
+==================================================
+08:00:16 [INFO] Scraping immoscoop...
+08:00:16 [INFO] ==================================================
+08:00:16 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:17 [INFO] [immoscoop] Trying alternative URL
+08:00:20 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:20 [INFO] [immoscoop] No more results on page 1
+08:00:20 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:20 [INFO] 
+Total listings scraped: 19
+08:00:20 [INFO] New listings after deduplication: 4 (filtered 15 duplicates/previously emailed)
+08:00:20 [INFO] 
+Enriching listings...
+08:00:20 [INFO] Enriching immoweb:21718295...
+08:00:20 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21718295
+08:00:21 [INFO] Enriching immoweb:21449935...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:24 [INFO] Enriching immoweb:21541060...
+08:00:26 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:27 [INFO] Enriching immoweb:21460551...
+08:00:29 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:30 [INFO] Proximity filter kept 0/4 listings
+08:00:30 [INFO] 
+AI text scoring...
+08:00:30 [INFO] ✅ Groq client initialized
+08:00:30 [INFO] [text_scorer] Scoring 0 listings...
+08:00:30 [INFO] 
+Photo scoring disabled by configuration
+08:00:30 [INFO] 
+============================================================
+08:00:30 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:30 [INFO] ============================================================
+08:00:30 [INFO] No listings to show
+08:00:30 [INFO] 
+Sending daily digest...
+08:00:30 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:32 [INFO] Email sent successfully
+08:00:32 [INFO] 
+Done in 30.8s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-23 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:01 [INFO] [immoweb] API returned 13 listings
+08:00:01 [INFO] [immoweb] Page 1: 13 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 28 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 13 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:08 [INFO] [zimmo] Page 1: 2 listings
+08:00:12 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 2 listings
+08:00:15 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:15 [INFO] [zimmo] Page 3: 2 listings
+08:00:15 [INFO] [zimmo] ✅ Found 6 listings
+08:00:15 [INFO] 
+==================================================
+08:00:15 [INFO] Scraping immoscoop...
+08:00:15 [INFO] ==================================================
+08:00:15 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:16 [INFO] [immoscoop] Trying alternative URL
+08:00:20 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:20 [INFO] [immoscoop] No more results on page 1
+08:00:20 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:20 [INFO] 
+Total listings scraped: 19
+08:00:20 [INFO] New listings after deduplication: 4 (filtered 15 duplicates/previously emailed)
+08:00:20 [INFO] 
+Enriching listings...
+08:00:20 [INFO] Enriching immoweb:21718295...
+08:00:20 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21718295
+08:00:20 [INFO] Enriching immoweb:21449935...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:23 [INFO] Enriching immoweb:21541060...
+08:00:26 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:27 [INFO] Enriching immoweb:21460551...
+08:00:30 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:30 [INFO] Proximity filter kept 0/4 listings
+08:00:30 [INFO] 
+AI text scoring...
+08:00:30 [INFO] ✅ Groq client initialized
+08:00:30 [INFO] [text_scorer] Scoring 0 listings...
+08:00:30 [INFO] 
+Photo scoring disabled by configuration
+08:00:30 [INFO] 
+============================================================
+08:00:30 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:30 [INFO] ============================================================
+08:00:30 [INFO] No listings to show
+08:00:30 [INFO] 
+Sending daily digest...
+08:00:30 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:32 [INFO] Email sent successfully
+08:00:32 [INFO] 
+Done in 31.1s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-24 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 25 ids, 30 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 15 listings
+08:00:02 [INFO] [immoweb] Page 1: 15 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 30 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 15 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:08 [INFO] [zimmo] Page 1: 3 listings
+08:00:11 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 3 listings
+08:00:14 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:15 [INFO] [zimmo] Page 3: 3 listings
+08:00:15 [INFO] [zimmo] ✅ Found 9 listings
+08:00:15 [INFO] 
+==================================================
+08:00:15 [INFO] Scraping immoscoop...
+08:00:15 [INFO] ==================================================
+08:00:15 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:15 [INFO] [immoscoop] Trying alternative URL
+08:00:18 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:19 [INFO] [immoscoop] No more results on page 1
+08:00:19 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:19 [INFO] 
+Total listings scraped: 24
+08:00:19 [INFO] New listings after deduplication: 6 (filtered 18 duplicates/previously emailed)
+08:00:19 [INFO] 
+Enriching listings...
+08:00:19 [INFO] Enriching immoweb:21727300...
+08:00:19 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21727300
+08:00:19 [INFO] Enriching immoweb:21726385...
+08:00:23 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21726385
+08:00:23 [INFO] Enriching immoweb:21718295...
+08:00:25 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21718295
+08:00:26 [INFO] Enriching immoweb:21449935...
+08:00:28 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:29 [INFO] Enriching immoweb:21541060...
+08:00:31 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:32 [INFO] Enriching immoweb:21460551...
+08:00:35 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:35 [INFO] Proximity filter kept 2/6 listings
+08:00:35 [INFO] 
+AI text scoring...
+08:00:36 [INFO] ✅ Groq client initialized
+08:00:36 [INFO] [text_scorer] Scoring 2 listings...
+08:00:36 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:37 [INFO] [text_scorer] (1/2) immoweb:21727300 → 8.0/10
+08:00:37 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:37 [INFO] [text_scorer] (2/2) immoweb:21726385 → 6.0/10
+08:00:37 [INFO] 
+Photo scoring disabled by configuration
+08:00:37 [INFO] 
+============================================================
+08:00:37 [INFO] DAILY RESULTS - 2 new listings ranked
+08:00:37 [INFO] ============================================================
+08:00:37 [INFO] #1 [8.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 950/mo - 9620 Zottegem (immoweb)
+08:00:37 [INFO]     The apartment features a fully fitted open-plan kitchen, a modern bathroom, and large windows, indicating a modern and well-maintained living space, but lacks specific mentions of recent renovations or high-end materials. | no location preference matches
+08:00:37 [INFO] #2 [6.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 1100/mo - 9620 Zottegem (immoweb)
+08:00:37 [INFO]     The apartment has a good EPC label A, but the limited description does not provide enough information to confirm modern finishes or recent renovations, so a moderate score is assigned. | no location preference matches
+08:00:37 [INFO] 
+Sending daily digest...
+08:00:37 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:39 [INFO] Email sent successfully
+08:00:39 [INFO] 
+============================================================
+08:00:39 [INFO] WEEKLY TOP 10 - Week 30 of 2026
+08:00:39 [INFO] ============================================================
+08:00:39 [INFO] #1 [8.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 950/mo - 9620 Zottegem (immoweb)
+08:00:39 [INFO]     The apartment features a fully fitted open-plan kitchen, a modern bathroom, and large windows, indicating a modern and well-maintained living space, but lacks specific mentions of recent renovations or high-end materials. | no location preference matches
+08:00:39 [INFO] #2 [6.0/10] Apartment in 9620 Zottegem — 9620 Zottegem - EUR 1100/mo - 9620 Zottegem (immoweb)
+08:00:39 [INFO]     The apartment has a good EPC label A, but the limited description does not provide enough information to confirm modern finishes or recent renovations, so a moderate score is assigned. | no location preference matches
+08:00:39 [INFO] 
+Sending weekly digest...
+08:00:39 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:40 [INFO] Email sent successfully
+08:00:40 [INFO] 
+Done in 39.0s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-25 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 27 ids, 32 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 16 listings
+08:00:02 [INFO] [immoweb] Page 1: 16 listings
+08:00:04 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:08 [INFO] [immoweb] Found 28 card elements on page
+08:00:08 [INFO] [immoweb] No more results on page 2
+08:00:08 [INFO] [immoweb] ✅ Found 16 listings
+08:00:08 [INFO] 
+==================================================
+08:00:08 [INFO] Scraping zimmo...
+08:00:08 [INFO] ==================================================
+08:00:08 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:09 [INFO] [zimmo] Page 1: 3 listings
+08:00:11 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:12 [INFO] [zimmo] Page 2: 3 listings
+08:00:15 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:15 [INFO] [zimmo] Page 3: 3 listings
+08:00:15 [INFO] [zimmo] ✅ Found 9 listings
+08:00:15 [INFO] 
+==================================================
+08:00:15 [INFO] Scraping immoscoop...
+08:00:15 [INFO] ==================================================
+08:00:15 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:15 [INFO] [immoscoop] Trying alternative URL
+08:00:19 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:19 [INFO] [immoscoop] No more results on page 1
+08:00:19 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:19 [INFO] 
+Total listings scraped: 25
+08:00:19 [INFO] New listings after deduplication: 5 (filtered 20 duplicates/previously emailed)
+08:00:19 [INFO] 
+Enriching listings...
+08:00:19 [INFO] Enriching immoweb:21729261...
+08:00:19 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21729261
+08:00:20 [INFO] Enriching immoweb:21718295...
+08:00:22 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21718295
+08:00:22 [INFO] Enriching immoweb:21449935...
+08:00:25 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:25 [INFO] Enriching immoweb:21541060...
+08:00:28 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:29 [INFO] Enriching immoweb:21460551...
+08:00:31 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:32 [INFO] Proximity filter kept 1/5 listings
+08:00:32 [INFO] 
+AI text scoring...
+08:00:32 [INFO] ✅ Groq client initialized
+08:00:32 [INFO] [text_scorer] Scoring 1 listings...
+08:00:32 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+08:00:32 [INFO] [text_scorer] (1/1) immoweb:21729261 → 10.0/10
+08:00:32 [INFO] 
+Photo scoring disabled by configuration
+08:00:32 [INFO] 
+============================================================
+08:00:32 [INFO] DAILY RESULTS - 1 new listings ranked
+08:00:32 [INFO] ============================================================
+08:00:32 [INFO] #1 [10.0/10] Apartment in 9620 ZOTTEGEM — 9620 ZOTTEGEM - EUR 1070/mo - 9620 ZOTTEGEM (immoweb)
+08:00:32 [INFO]     The apartment is described as brand-new with contemporary finishes, featuring a fully equipped kitchen, underfloor heating and cooling via geothermal energy, and an EPC A+ label, indicating a high level of modernity and energy efficiency. | no location preference matches
+08:00:32 [INFO] 
+Sending daily digest...
+08:00:32 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:34 [INFO] Email sent successfully
+08:00:34 [INFO] 
+Done in 33.0s
+08:00:01 [INFO] Apartment Hunter starting...
+08:00:01 [INFO] Timestamp: 2026-07-26 08:00:01
+08:00:01 [INFO] Mode: full
+08:00:01 [INFO] Previously emailed listings: 28 ids, 33 fingerprints
+08:00:01 [INFO] 
+==================================================
+08:00:01 [INFO] Scraping immoweb...
+08:00:01 [INFO] ==================================================
+08:00:01 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=1
+08:00:02 [INFO] [immoweb] API returned 16 listings
+08:00:02 [INFO] [immoweb] Page 1: 16 listings
+08:00:05 [INFO] [immoweb] GET https://www.immoweb.be/en/search-results/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] GET https://www.immoweb.be/en/search/apartment/for-rent?countries=BE&postalCodes=BE-9620&minPrice=750&maxPrice=1100&minBedroomCount=2&orderBy=newest&page=2
+08:00:09 [INFO] [immoweb] Found 28 card elements on page
+08:00:09 [INFO] [immoweb] No more results on page 2
+08:00:09 [INFO] [immoweb] ✅ Found 16 listings
+08:00:09 [INFO] 
+==================================================
+08:00:09 [INFO] Scraping zimmo...
+08:00:09 [INFO] ==================================================
+08:00:09 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2
+08:00:10 [INFO] [zimmo] Page 1: 3 listings
+08:00:13 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=2
+08:00:13 [INFO] [zimmo] Page 2: 3 listings
+08:00:16 [INFO] [zimmo] GET https://www.zimmo.be/nl/zottegem-9620/te-huur/appartement/?priceMin=750&priceMax=1100&roomsMin=2&page=3
+08:00:16 [INFO] [zimmo] Page 3: 3 listings
+08:00:16 [INFO] [zimmo] ✅ Found 9 listings
+08:00:16 [INFO] 
+==================================================
+08:00:16 [INFO] Scraping immoscoop...
+08:00:16 [INFO] ==================================================
+08:00:16 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/9620-zottegem/appartement?priceMin=750&priceMax=1100
+08:00:17 [INFO] [immoscoop] Trying alternative URL
+08:00:21 [INFO] [immoscoop] GET https://www.immoscoop.be/zoeken/te-huur/zottegem/appartement?priceMin=750&priceMax=1100
+08:00:22 [INFO] [immoscoop] No more results on page 1
+08:00:22 [INFO] [immoscoop] ✅ Found 0 listings
+08:00:22 [INFO] 
+Total listings scraped: 25
+08:00:22 [INFO] New listings after deduplication: 4 (filtered 21 duplicates/previously emailed)
+08:00:22 [INFO] 
+Enriching listings...
+08:00:22 [INFO] Enriching immoweb:21718295...
+08:00:22 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21718295
+08:00:22 [INFO] Enriching immoweb:21449935...
+08:00:25 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21449935
+08:00:26 [INFO] Enriching immoweb:21541060...
+08:00:28 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21541060
+08:00:29 [INFO] Enriching immoweb:21460551...
+08:00:32 [INFO] [immoweb] GET https://www.immoweb.be/en/classified/apartment/for-rent/zottegem/9620/21460551
+08:00:32 [INFO] Proximity filter kept 0/4 listings
+08:00:32 [INFO] 
+AI text scoring...
+08:00:32 [INFO] ✅ Groq client initialized
+08:00:32 [INFO] [text_scorer] Scoring 0 listings...
+08:00:32 [INFO] 
+Photo scoring disabled by configuration
+08:00:32 [INFO] 
+============================================================
+08:00:32 [INFO] DAILY RESULTS - 0 new listings ranked
+08:00:32 [INFO] ============================================================
+08:00:32 [INFO] No listings to show
+08:00:32 [INFO] 
+Sending daily digest...
+08:00:32 [INFO] Sending digest to kevinmartens@hotmail.be (CC: none) with mailer 2026-04-04-2
+08:00:33 [INFO] Email sent successfully
+08:00:33 [INFO] 
+Done in 32.0s

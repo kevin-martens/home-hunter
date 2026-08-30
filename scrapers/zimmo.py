@@ -9,7 +9,7 @@ import re
 from bs4 import BeautifulSoup
 
 from scrapers.base import BaseScraper, Listing
-from config import TARGET_POSTAL_CODE, TARGET_CITY, MIN_PRICE, MAX_PRICE, MIN_BEDROOMS
+from config import TARGET_LOCATIONS, PROPERTY_TYPES, TRANSACTION_TYPES, MIN_PRICE, MAX_PRICE, MIN_BUY_PRICE, MAX_BUY_PRICE, MIN_BEDROOMS
 
 logger = logging.getLogger(__name__)
 
@@ -20,23 +20,36 @@ class ZimmoScraper(BaseScraper):
     PLATFORM_NAME = "zimmo"
     REQUEST_DELAY = 2.0
 
-    SEARCH_URL = f"https://www.zimmo.be/nl/{TARGET_CITY.lower()}-{TARGET_POSTAL_CODE}/te-huur/appartement/?priceMin={MIN_PRICE}&priceMax={MAX_PRICE}&roomsMin={MIN_BEDROOMS}"
 
     MAX_PAGES = 3
 
     def scrape(self) -> list[Listing]:
-        """Scrape Zimmo search results."""
+        """Scrape Zimmo search results across multiple permutations."""
         listings = []
 
-        for page in range(1, self.MAX_PAGES + 1):
-            page_listings = self._scrape_search_page(self._page_url(page))
+        for city, postal_code in TARGET_LOCATIONS:
+            for prop_type in PROPERTY_TYPES:
+                for trans_type in TRANSACTION_TYPES:
+                    
+                    self.current_min_price = MIN_PRICE if trans_type == "rent" else MIN_BUY_PRICE
+                    self.current_max_price = MAX_PRICE if trans_type == "rent" else MAX_BUY_PRICE
+                    self.current_postal_code = postal_code
+                    self.current_city = city
+                    
+                    zimmo_prop_type = "appartement" if prop_type == "apartment" else "huis"
+                    zimmo_trans_type = "te-huur" if trans_type == "rent" else "te-koop"
+                    
+                    self.current_search_url = f"https://www.zimmo.be/nl/{city.lower()}-{postal_code}/{zimmo_trans_type}/{zimmo_prop_type}/?priceMin={self.current_min_price}&priceMax={self.current_max_price}&roomsMin={MIN_BEDROOMS}"
+                    
+                    for page in range(1, self.MAX_PAGES + 1):
+                        page_listings = self._scrape_search_page(self._page_url(page))
 
-            if not page_listings:
-                logger.info(f"[{self.PLATFORM_NAME}] No more results on page {page}")
-                break
+                        if not page_listings:
+                            logger.info(f"[{self.PLATFORM_NAME}] No more results on page {page} for {city} {prop_type} {trans_type}")
+                            break
 
-            listings.extend(page_listings)
-            logger.info(f"[{self.PLATFORM_NAME}] Page {page}: {len(page_listings)} listings")
+                        listings.extend(page_listings)
+                        logger.info(f"[{self.PLATFORM_NAME}] Page {page} ({city} {prop_type} {trans_type}): {len(page_listings)} listings")
 
         return listings
 
@@ -82,9 +95,9 @@ class ZimmoScraper(BaseScraper):
     def _page_url(self, page: int) -> str:
         """Build a paginated Zimmo URL."""
         if page <= 1:
-            return self.SEARCH_URL
-        separator = "&" if "?" in self.SEARCH_URL else "?"
-        return f"{self.SEARCH_URL}{separator}page={page}"
+            return self.current_search_url
+        separator = "&" if "?" in self.current_search_url else "?"
+        return f"{self.current_search_url}{separator}page={page}"
 
     def _parse_anchor_blocks(self, soup: BeautifulSoup) -> list[Listing]:
         """Fallback parser for the current Zimmo results layout."""
@@ -110,7 +123,7 @@ class ZimmoScraper(BaseScraper):
             text = container.get_text("\n", strip=True)
 
             price = self._parse_price(text)
-            if not (MIN_PRICE <= price <= MAX_PRICE):
+            if not (self.current_min_price <= price <= self.current_max_price):
                 continue
 
             address = self._extract_address_from_text(text)
@@ -253,7 +266,7 @@ class ZimmoScraper(BaseScraper):
             # Price
             offers = listed_item.get("offers", {})
             price = int(offers.get("price", 0)) if isinstance(offers, dict) else 0
-            if not (MIN_PRICE <= price <= MAX_PRICE):
+            if not (self.current_min_price <= price <= self.current_max_price):
                 return None
 
             # Image
@@ -263,12 +276,12 @@ class ZimmoScraper(BaseScraper):
             return Listing(
                 id=listing_id,
                 platform=self.PLATFORM_NAME,
-                title=name or f"Apartment in {TARGET_CITY.capitalize()} — €{price}/mo",
+                title=name or f"Apartment in {self.current_city.capitalize()} — €{price}/mo",
                 price=price,
                 bedrooms=MIN_BEDROOMS,  # Default, will be enriched
-                address=listed_item.get("address", {}).get("streetAddress", TARGET_CITY.capitalize())
+                address=listed_item.get("address", {}).get("streetAddress", self.current_city.capitalize())
                 if isinstance(listed_item.get("address"), dict)
-                else TARGET_CITY.capitalize(),
+                else self.current_city.capitalize(),
                 url=url if url.startswith("http") else f"https://www.zimmo.be{url}",
                 description=listed_item.get("description", ""),
                 image_urls=images,
@@ -285,7 +298,7 @@ class ZimmoScraper(BaseScraper):
                 return None
 
             price = int(item.get("price", item.get("rent", 0)))
-            if not (MIN_PRICE <= price <= MAX_PRICE):
+            if not (self.current_min_price <= price <= self.current_max_price):
                 return None
 
             bedrooms = int(item.get("rooms", item.get("bedrooms", item.get("bedroom_count", 0))))
@@ -306,10 +319,10 @@ class ZimmoScraper(BaseScraper):
             return Listing(
                 id=listing_id,
                 platform=self.PLATFORM_NAME,
-                title=item.get("title", item.get("name", f"Apartment in {TARGET_CITY.capitalize()} — €{price}/mo")),
+                title=item.get("title", item.get("name", f"Apartment in {self.current_city.capitalize()} — €{price}/mo")),
                 price=price,
                 bedrooms=bedrooms,
-                address=item.get("address", item.get("location", TARGET_CITY.capitalize())),
+                address=item.get("address", item.get("location", self.current_city.capitalize())),
                 url=url,
                 description=item.get("description", ""),
                 image_urls=images,
@@ -340,17 +353,17 @@ class ZimmoScraper(BaseScraper):
 
             # Title
             title_el = card.select_one("h2, h3, [class*='title'], .property-title")
-            title = title_el.get_text(strip=True) if title_el else f"Apartment in {TARGET_CITY.capitalize()}"
+            title = title_el.get_text(strip=True) if title_el else f"Apartment in {self.current_city.capitalize()}"
 
             # Price
             price_el = card.select_one("[class*='price'], .property-price")
             price = self._parse_price(price_el.get_text(strip=True)) if price_el else 0
-            if not (MIN_PRICE <= price <= MAX_PRICE):
+            if not (self.current_min_price <= price <= self.current_max_price):
                 return None
 
             # Address
             addr_el = card.select_one("[class*='address'], [class*='location'], .property-location")
-            address = addr_el.get_text(strip=True) if addr_el else TARGET_CITY.capitalize()
+            address = addr_el.get_text(strip=True) if addr_el else self.current_city.capitalize()
 
             # Bedrooms
             bedrooms = self._extract_bedrooms(card)
@@ -453,7 +466,7 @@ class ZimmoScraper(BaseScraper):
             if node is None:
                 break
             text = node.get_text(" ", strip=True)
-            if "€" in text and TARGET_CITY.lower() in text.lower() and len(text) < 900:
+            if "€" in text and self.current_city.lower() in text.lower() and len(text) < 900:
                 return node
         return link.parent or link
 
@@ -462,16 +475,16 @@ class ZimmoScraper(BaseScraper):
         """Extract an address from nearby card text."""
         lines = [line.strip() for line in text.splitlines() if line.strip()]
         for index, line in enumerate(lines):
-            if re.fullmatch(rf"{TARGET_POSTAL_CODE}\s+{re.escape(TARGET_CITY)}", line, re.IGNORECASE):
+            if re.fullmatch(rf"{self.current_postal_code}\s+{re.escape(self.current_city)}", line, re.IGNORECASE):
                 if index > 0:
                     return f"{lines[index - 1]}, {line}"
                 return line
 
-        match = re.search(rf"([A-ZÀ-ÿ0-9][^\n]+?)\s*({TARGET_POSTAL_CODE}\s+{re.escape(TARGET_CITY)})", text, re.IGNORECASE)
+        match = re.search(rf"([A-ZÀ-ÿ0-9][^\n]+?)\s*({self.current_postal_code}\s+{re.escape(self.current_city)})", text, re.IGNORECASE)
         if match:
             return f"{match.group(1).strip()}, {match.group(2).strip()}"
 
-        return TARGET_CITY.capitalize()
+        return self.current_city.capitalize()
 
 
 # Allow running standalone for testing

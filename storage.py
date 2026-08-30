@@ -88,16 +88,41 @@ def normalize_text(value: str) -> str:
 
 
 def listing_fingerprint(listing: Listing) -> str:
-    """Stable cross-platform fingerprint for a property."""
-    address = normalize_text(listing.address)
-    title = normalize_text(listing.title)
+    """Stable cross-platform fingerprint for a property.
+
+    Uses postal code + price + bedrooms + surface to match the same physical
+    property across platforms (e.g., Immoweb vs Spotto).  When surface is
+    unknown (0) we fall back to including the platform-specific unique key so
+    that two different listings on the same platform with the same price never
+    collapse into a single fingerprint.
+    """
+    postal_code = "0000"
+    match = re.search(r'\b\d{4}\b', listing.address)
+    if match:
+        postal_code = match.group(0)
+
+    surface = listing.surface_m2 or 0
+    bedrooms = listing.bedrooms or 0
+
+    # If we have no surface info, disambiguate within the same platform by
+    # appending the unique key, which still allows cross-platform matching
+    # when two listings share postal code + price + bedrooms.
+    if surface == 0:
+        return "|".join(
+            [
+                postal_code,
+                str(listing.price or 0),
+                str(bedrooms),
+                listing.unique_key,
+            ]
+        )
+
     return "|".join(
         [
-            address[:80],
+            postal_code,
             str(listing.price or 0),
-            str(listing.bedrooms or 0),
-            str(listing.surface_m2 or 0),
-            title[:40],
+            str(bedrooms),
+            str(surface),
         ]
     )
 

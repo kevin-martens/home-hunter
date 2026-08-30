@@ -9,7 +9,7 @@ import re
 from bs4 import BeautifulSoup
 
 from scrapers.base import BaseScraper, Listing
-from config import TARGET_POSTAL_CODE, TARGET_CITY, MIN_PRICE, MAX_PRICE, MIN_BEDROOMS
+from config import TARGET_LOCATIONS, PROPERTY_TYPES, TRANSACTION_TYPES, MIN_PRICE, MAX_PRICE, MIN_BUY_PRICE, MAX_BUY_PRICE, MIN_BEDROOMS
 
 logger = logging.getLogger(__name__)
 
@@ -20,8 +20,6 @@ class ImmoscoopScraper(BaseScraper):
     PLATFORM_NAME = "immoscoop"
     REQUEST_DELAY = 3.0
 
-    SEARCH_URL = f"https://www.immoscoop.be/zoeken/te-huur/{TARGET_POSTAL_CODE}-{TARGET_CITY.lower()}/appartement?priceMin={MIN_PRICE}&priceMax={MAX_PRICE}"
-    SEARCH_URL_ALT = f"https://www.immoscoop.be/zoeken/te-huur/{TARGET_CITY.lower()}/appartement?priceMin={MIN_PRICE}&priceMax={MAX_PRICE}"
 
     MAX_PAGES = 3
 
@@ -29,18 +27,33 @@ class ImmoscoopScraper(BaseScraper):
         """Scrape Immoscoop search results."""
         listings = []
 
-        for page in range(1, self.MAX_PAGES + 1):
-            page_listings = self._scrape_search_page(self._page_url(self.SEARCH_URL, page))
-            if not page_listings and page == 1:
-                logger.info(f"[{self.PLATFORM_NAME}] Trying alternative URL")
-                page_listings = self._scrape_search_page(self._page_url(self.SEARCH_URL_ALT, page))
+        for city, postal_code in TARGET_LOCATIONS:
+            for prop_type in PROPERTY_TYPES:
+                for trans_type in TRANSACTION_TYPES:
+                    
+                    self.current_min_price = MIN_PRICE if trans_type == "rent" else MIN_BUY_PRICE
+                    self.current_max_price = MAX_PRICE if trans_type == "rent" else MAX_BUY_PRICE
+                    self.current_postal_code = postal_code
+                    self.current_city = city
+                    
+                    immo_prop_type = "appartement" if prop_type == "apartment" else "huis"
+                    immo_trans_type = "te-huur" if trans_type == "rent" else "te-koop"
+                    
+                    search_url = f"https://www.immoscoop.be/zoeken/{immo_trans_type}/{postal_code}-{city.lower()}/{immo_prop_type}?priceMin={self.current_min_price}&priceMax={self.current_max_price}"
+                    search_url_alt = f"https://www.immoscoop.be/zoeken/{immo_trans_type}/{city.lower()}/{immo_prop_type}?priceMin={self.current_min_price}&priceMax={self.current_max_price}"
+                    
+                    for page in range(1, self.MAX_PAGES + 1):
+                        page_listings = self._scrape_search_page(self._page_url(search_url, page))
+                        if not page_listings and page == 1:
+                            logger.info(f"[{self.PLATFORM_NAME}] Trying alternative URL")
+                            page_listings = self._scrape_search_page(self._page_url(search_url_alt, page))
 
-            if not page_listings:
-                logger.info(f"[{self.PLATFORM_NAME}] No more results on page {page}")
-                break
+                        if not page_listings:
+                            logger.info(f"[{self.PLATFORM_NAME}] No more results on page {page} for {city} {prop_type} {trans_type}")
+                            break
 
-            listings.extend(page_listings)
-            logger.info(f"[{self.PLATFORM_NAME}] Page {page}: {len(page_listings)} listings")
+                        listings.extend(page_listings)
+                        logger.info(f"[{self.PLATFORM_NAME}] Page {page} ({city} {prop_type} {trans_type}): {len(page_listings)} listings")
 
         return listings
 
@@ -114,7 +127,7 @@ class ImmoscoopScraper(BaseScraper):
             container = self._find_result_container(link)
             text = container.get_text("\n", strip=True)
             price = self._parse_price(text)
-            if not (MIN_PRICE <= price <= MAX_PRICE):
+            if not (self.current_min_price <= price <= self.current_max_price):
                 continue
 
             bedrooms = self._extract_bedrooms(container)
@@ -270,13 +283,13 @@ class ImmoscoopScraper(BaseScraper):
 
             offers = item.get("offers", {})
             price = int(offers.get("price", 0)) if isinstance(offers, dict) else 0
-            if not (MIN_PRICE <= price <= MAX_PRICE):
+            if not (self.current_min_price <= price <= self.current_max_price):
                 return None
 
             return Listing(
                 id=listing_id,
                 platform=self.PLATFORM_NAME,
-                title=item.get("name", f"Apartment in {TARGET_CITY.capitalize()} — €{price}/mo"),
+                title=item.get("name", f"Apartment in {self.current_city.capitalize()} — €{price}/mo"),
                 price=price,
                 bedrooms=MIN_BEDROOMS,
                 address=self._extract_address(item),
@@ -296,7 +309,7 @@ class ImmoscoopScraper(BaseScraper):
                 return None
 
             price = int(item.get("price", item.get("rent", item.get("huurprijs", 0))))
-            if not (MIN_PRICE <= price <= MAX_PRICE):
+            if not (self.current_min_price <= price <= self.current_max_price):
                 return None
 
             bedrooms = int(item.get("bedrooms", item.get("slaapkamers", item.get("rooms", MIN_BEDROOMS))))
@@ -320,10 +333,10 @@ class ImmoscoopScraper(BaseScraper):
             return Listing(
                 id=listing_id,
                 platform=self.PLATFORM_NAME,
-                title=item.get("title", item.get("name", f"Apartment in {TARGET_CITY.capitalize()} — €{price}/mo")),
+                title=item.get("title", item.get("name", f"Apartment in {self.current_city.capitalize()} — €{price}/mo")),
                 price=price,
                 bedrooms=bedrooms,
-                address=item.get("address", item.get("location", TARGET_CITY.capitalize())),
+                address=item.get("address", item.get("location", self.current_city.capitalize())),
                 url=url,
                 description=item.get("description", item.get("beschrijving", "")),
                 image_urls=images,
@@ -354,17 +367,17 @@ class ImmoscoopScraper(BaseScraper):
 
             # Title
             title_el = card.select_one("h2, h3, [class*='title']")
-            title = title_el.get_text(strip=True) if title_el else f"Apartment in {TARGET_CITY.capitalize()}"
+            title = title_el.get_text(strip=True) if title_el else f"Apartment in {self.current_city.capitalize()}"
 
             # Price
             price_el = card.select_one("[class*='price'], [class*='prijs']")
             price = self._parse_price(price_el.get_text(strip=True)) if price_el else 0
-            if not (MIN_PRICE <= price <= MAX_PRICE):
+            if not (self.current_min_price <= price <= self.current_max_price):
                 return None
 
             # Address
             addr_el = card.select_one("[class*='address'], [class*='location'], [class*='adres']")
-            address = addr_el.get_text(strip=True) if addr_el else TARGET_CITY.capitalize()
+            address = addr_el.get_text(strip=True) if addr_el else self.current_city.capitalize()
 
             # Bedrooms
             bedrooms = self._extract_bedrooms(card)
@@ -413,12 +426,12 @@ class ImmoscoopScraper(BaseScraper):
             parts = [
                 addr.get("streetAddress", ""),
                 addr.get("postalCode", ""),
-                addr.get("addressLocality", TARGET_CITY.capitalize()),
+                addr.get("addressLocality", self.current_city.capitalize()),
             ]
             return " ".join(p for p in parts if p).strip()
         if isinstance(addr, str):
             return addr
-        return TARGET_CITY.capitalize()
+        return self.current_city.capitalize()
 
     @staticmethod
     def _parse_price(text: str) -> int:
@@ -463,8 +476,7 @@ class ImmoscoopScraper(BaseScraper):
         except (ValueError, TypeError):
             return None
 
-    @staticmethod
-    def _find_result_container(link):
+    def _find_result_container(self, link):
         """Find a reasonably scoped card container for a listing link."""
         node = link
         for _ in range(6):
@@ -472,25 +484,24 @@ class ImmoscoopScraper(BaseScraper):
             if node is None:
                 break
             text = node.get_text(" ", strip=True)
-            if "€" in text and TARGET_CITY.lower() in text.lower() and len(text) < 900:
+            if "€" in text and self.current_city.lower() in text.lower() and len(text) < 900:
                 return node
         return link.parent or link
 
-    @staticmethod
-    def _extract_address_from_text(text: str) -> str:
+    def _extract_address_from_text(self, text: str) -> str:
         """Extract an address from nearby card text."""
         lines = [line.strip() for line in text.splitlines() if line.strip()]
         for index, line in enumerate(lines):
-            if re.fullmatch(rf"{TARGET_POSTAL_CODE}\s+{re.escape(TARGET_CITY)}", line, re.IGNORECASE):
+            if re.fullmatch(rf"{self.current_postal_code}\s+{re.escape(self.current_city)}", line, re.IGNORECASE):
                 if index > 0:
                     return f"{lines[index - 1]}, {line}"
                 return line
 
-        match = re.search(rf"([A-ZÀ-ÿ0-9][^\n]+?)\s*({TARGET_POSTAL_CODE}\s+{re.escape(TARGET_CITY)})", text, re.IGNORECASE)
+        match = re.search(rf"([A-ZÀ-ÿ0-9][^\n]+?)\s*({self.current_postal_code}\s+{re.escape(self.current_city)})", text, re.IGNORECASE)
         if match:
             return f"{match.group(1).strip()}, {match.group(2).strip()}"
 
-        return TARGET_CITY.capitalize()
+        return self.current_city.capitalize()
 
 
 # Allow running standalone for testing
