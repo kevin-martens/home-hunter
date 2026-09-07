@@ -8,7 +8,7 @@ import re
 
 from bs4 import BeautifulSoup
 
-from scrapers.base import BaseScraper, Listing
+from scrapers.base import BaseScraper, Listing, detect_property_type, fallback_title, normalize_property_type
 from config import TARGET_LOCATIONS, PROPERTY_TYPES, TRANSACTION_TYPES, MIN_PRICE, MAX_PRICE, MIN_BUY_PRICE, MAX_BUY_PRICE, MIN_BEDROOMS
 
 logger = logging.getLogger(__name__)
@@ -35,6 +35,7 @@ class ImmoscoopScraper(BaseScraper):
                     self.current_max_price = MAX_PRICE if trans_type == "rent" else MAX_BUY_PRICE
                     self.current_postal_code = postal_code
                     self.current_city = city
+                    self.current_property_type = normalize_property_type(prop_type)
                     
                     immo_prop_type = "appartement" if prop_type == "apartment" else "huis"
                     immo_trans_type = "te-huur" if trans_type == "rent" else "te-koop"
@@ -111,7 +112,15 @@ class ImmoscoopScraper(BaseScraper):
 
         for link in soup.find_all("a", href=True):
             title_text = link.get_text(" ", strip=True)
-            if "Appartement te huur" not in title_text:
+            title_lower = title_text.lower()
+            if not any(
+                marker in title_lower
+                for marker in (
+                    "appartement te huur", "appartement te koop",
+                    "huis te huur", "huis te koop",
+                    "apartment", "house", "woning",
+                )
+            ):
                 continue
 
             href = link.get("href", "")
@@ -155,6 +164,11 @@ class ImmoscoopScraper(BaseScraper):
                     description="",
                     image_urls=image_urls,
                     surface_m2=self._extract_surface(container),
+                    property_type=detect_property_type(
+                        fallback=getattr(self, "current_property_type", "apartment"),
+                        url=href,
+                        title=title_text,
+                    ),
                 )
             )
             seen_ids.add(listing_id)
@@ -286,16 +300,23 @@ class ImmoscoopScraper(BaseScraper):
             if not (self.current_min_price <= price <= self.current_max_price):
                 return None
 
+            full_url = url if url.startswith("http") else f"https://www.immoscoop.be{url}"
+            property_type = detect_property_type(
+                fallback=getattr(self, "current_property_type", "apartment"),
+                url=full_url,
+                title=str(item.get("name", "")),
+            )
             return Listing(
                 id=listing_id,
                 platform=self.PLATFORM_NAME,
-                title=item.get("name", f"Apartment in {self.current_city.capitalize()} — €{price}/mo"),
+                title=item.get("name", fallback_title(property_type, self.current_city.capitalize(), price)),
                 price=price,
                 bedrooms=MIN_BEDROOMS,
                 address=self._extract_address(item),
-                url=url if url.startswith("http") else f"https://www.immoscoop.be{url}",
+                url=full_url,
                 description=item.get("description", ""),
                 image_urls=[item["image"]] if item.get("image") else [],
+                property_type=property_type,
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse JSON-LD: {e}")
@@ -333,7 +354,15 @@ class ImmoscoopScraper(BaseScraper):
             return Listing(
                 id=listing_id,
                 platform=self.PLATFORM_NAME,
-                title=item.get("title", item.get("name", f"Apartment in {self.current_city.capitalize()} — €{price}/mo")),
+                title=item.get("title", item.get("name", fallback_title(
+                    detect_property_type(
+                        fallback=getattr(self, "current_property_type", "apartment"),
+                        url=url,
+                        title=str(item.get("title", item.get("name", ""))),
+                    ),
+                    self.current_city.capitalize(),
+                    price,
+                ))),
                 price=price,
                 bedrooms=bedrooms,
                 address=item.get("address", item.get("location", self.current_city.capitalize())),
@@ -342,6 +371,11 @@ class ImmoscoopScraper(BaseScraper):
                 image_urls=images,
                 epc_label=item.get("epc", item.get("epc_label")),
                 surface_m2=self._safe_int(item.get("surface", item.get("oppervlakte"))),
+                property_type=detect_property_type(
+                    fallback=getattr(self, "current_property_type", "apartment"),
+                    url=url,
+                    title=str(item.get("title", item.get("name", ""))),
+                ),
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse JSON item: {e}")
@@ -367,7 +401,13 @@ class ImmoscoopScraper(BaseScraper):
 
             # Title
             title_el = card.select_one("h2, h3, [class*='title']")
-            title = title_el.get_text(strip=True) if title_el else f"Apartment in {self.current_city.capitalize()}"
+            raw_title = title_el.get_text(strip=True) if title_el else ""
+            property_type = detect_property_type(
+                fallback=getattr(self, "current_property_type", "apartment"),
+                url=href,
+                title=raw_title,
+            )
+            title = raw_title or fallback_title(property_type, self.current_city.capitalize()).split(" — ")[0]
 
             # Price
             price_el = card.select_one("[class*='price'], [class*='prijs']")
@@ -402,6 +442,7 @@ class ImmoscoopScraper(BaseScraper):
                 description="",
                 image_urls=[image_url] if image_url else [],
                 surface_m2=surface,
+                property_type=property_type,
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse HTML card: {e}")

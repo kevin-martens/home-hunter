@@ -8,7 +8,7 @@ import re
 
 from bs4 import BeautifulSoup
 
-from scrapers.base import BaseScraper, Listing
+from scrapers.base import BaseScraper, Listing, detect_property_type, fallback_title, normalize_property_type
 from config import TARGET_LOCATIONS, PROPERTY_TYPES, TRANSACTION_TYPES, MIN_PRICE, MAX_PRICE, MIN_BUY_PRICE, MAX_BUY_PRICE, MIN_BEDROOMS
 
 logger = logging.getLogger(__name__)
@@ -35,6 +35,7 @@ class ZimmoScraper(BaseScraper):
                     self.current_max_price = MAX_PRICE if trans_type == "rent" else MAX_BUY_PRICE
                     self.current_postal_code = postal_code
                     self.current_city = city
+                    self.current_property_type = normalize_property_type(prop_type)
                     
                     zimmo_prop_type = "appartement" if prop_type == "apartment" else "huis"
                     zimmo_trans_type = "te-huur" if trans_type == "rent" else "te-koop"
@@ -106,7 +107,15 @@ class ZimmoScraper(BaseScraper):
 
         for link in soup.find_all("a", href=True):
             title_text = link.get_text(" ", strip=True)
-            if "Appartement te huur" not in title_text:
+            title_lower = title_text.lower()
+            if not any(
+                marker in title_lower
+                for marker in (
+                    "appartement te huur", "appartement te koop",
+                    "huis te huur", "huis te koop",
+                    "apartment", "house", "woning",
+                )
+            ):
                 continue
 
             href = link.get("href", "")
@@ -152,6 +161,11 @@ class ZimmoScraper(BaseScraper):
                     description="",
                     image_urls=image_urls,
                     surface_m2=self._extract_surface(container),
+                    property_type=detect_property_type(
+                        fallback=getattr(self, "current_property_type", "apartment"),
+                        url=href,
+                        title=title_text,
+                    ),
                 )
             )
             seen_ids.add(listing_id)
@@ -273,18 +287,25 @@ class ZimmoScraper(BaseScraper):
             image = listed_item.get("image", "")
             images = [image] if image else []
 
+            full_url = url if url.startswith("http") else f"https://www.zimmo.be{url}"
+            property_type = detect_property_type(
+                fallback=getattr(self, "current_property_type", "apartment"),
+                url=full_url,
+                title=name,
+            )
             return Listing(
                 id=listing_id,
                 platform=self.PLATFORM_NAME,
-                title=name or f"Apartment in {self.current_city.capitalize()} — €{price}/mo",
+                title=name or fallback_title(property_type, self.current_city.capitalize(), price),
                 price=price,
                 bedrooms=MIN_BEDROOMS,  # Default, will be enriched
                 address=listed_item.get("address", {}).get("streetAddress", self.current_city.capitalize())
                 if isinstance(listed_item.get("address"), dict)
                 else self.current_city.capitalize(),
-                url=url if url.startswith("http") else f"https://www.zimmo.be{url}",
+                url=full_url,
                 description=listed_item.get("description", ""),
                 image_urls=images,
+                property_type=property_type,
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse JSON-LD item: {e}")
@@ -319,7 +340,15 @@ class ZimmoScraper(BaseScraper):
             return Listing(
                 id=listing_id,
                 platform=self.PLATFORM_NAME,
-                title=item.get("title", item.get("name", f"Apartment in {self.current_city.capitalize()} — €{price}/mo")),
+                title=item.get("title", item.get("name", fallback_title(
+                    detect_property_type(
+                        fallback=getattr(self, "current_property_type", "apartment"),
+                        url=url,
+                        title=str(item.get("title", item.get("name", ""))),
+                    ),
+                    self.current_city.capitalize(),
+                    price,
+                ))),
                 price=price,
                 bedrooms=bedrooms,
                 address=item.get("address", item.get("location", self.current_city.capitalize())),
@@ -328,6 +357,11 @@ class ZimmoScraper(BaseScraper):
                 image_urls=images,
                 epc_label=item.get("epc", item.get("epc_label")),
                 surface_m2=self._safe_int(item.get("surface", item.get("area"))),
+                property_type=detect_property_type(
+                    fallback=getattr(self, "current_property_type", "apartment"),
+                    url=url,
+                    title=str(item.get("title", item.get("name", ""))),
+                ),
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse JSON item: {e}")
@@ -353,7 +387,13 @@ class ZimmoScraper(BaseScraper):
 
             # Title
             title_el = card.select_one("h2, h3, [class*='title'], .property-title")
-            title = title_el.get_text(strip=True) if title_el else f"Apartment in {self.current_city.capitalize()}"
+            raw_title = title_el.get_text(strip=True) if title_el else ""
+            property_type = detect_property_type(
+                fallback=getattr(self, "current_property_type", "apartment"),
+                url=href,
+                title=raw_title,
+            )
+            title = raw_title or fallback_title(property_type, self.current_city.capitalize()).split(" — ")[0]
 
             # Price
             price_el = card.select_one("[class*='price'], .property-price")
@@ -391,6 +431,7 @@ class ZimmoScraper(BaseScraper):
                 description="",
                 image_urls=[image_url] if image_url else [],
                 surface_m2=surface,
+                property_type=property_type,
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse HTML card: {e}")

@@ -177,6 +177,7 @@ def upsert_listing_record(
             "epc_label": listing.epc_label,
             "surface_m2": listing.surface_m2,
             "posted_date": listing.posted_date,
+            "property_type": getattr(listing, "property_type", "apartment") or "apartment",
             "text_score": listing.text_score,
             "photo_score": listing.photo_score,
             "final_score": listing.final_score,
@@ -246,6 +247,20 @@ def weekly_top_listings(history: dict, week_key: str, limit: int = 10) -> list[L
 
 def listing_from_record(record: dict) -> Listing:
     """Convert a stored history record back into a Listing."""
+    stored_type = str(record.get("property_type", "") or "").strip().lower()
+    if stored_type not in {"house", "apartment"}:
+        # Infer for records written before property_type was tracked.
+        url = str(record.get("url", "") or "")
+        title = str(record.get("title", "") or "")
+        haystack = f"{url} {title}".lower()
+        stored_type = "house" if any(
+            marker in haystack
+            for marker in (
+                "/house/", "/huis/", "/huizen/",
+                "house for", "house in", "huis te huur", "huis te koop",
+                "huis in", "woning", "maison",
+            )
+        ) else "apartment"
     return Listing(
         id=str(record.get("id", "")),
         platform=record.get("platform", "unknown"),
@@ -259,6 +274,7 @@ def listing_from_record(record: dict) -> Listing:
         epc_label=record.get("epc_label"),
         surface_m2=record.get("surface_m2"),
         posted_date=record.get("posted_date"),
+        property_type=stored_type,
         text_score=record.get("text_score"),
         photo_score=record.get("photo_score"),
         final_score=record.get("final_score"),

@@ -18,7 +18,7 @@ import re
 
 from bs4 import BeautifulSoup
 
-from scrapers.base import BaseScraper, Listing
+from scrapers.base import BaseScraper, Listing, detect_property_type, fallback_title, normalize_property_type
 from config import TARGET_LOCATIONS, PROPERTY_TYPES, TRANSACTION_TYPES, MIN_PRICE, MAX_PRICE, MIN_BUY_PRICE, MAX_BUY_PRICE, MIN_BEDROOMS
 
 logger = logging.getLogger(__name__)
@@ -47,6 +47,7 @@ class ImmowebScraper(BaseScraper):
                     self.current_max_price = MAX_PRICE if trans_type == "rent" else MAX_BUY_PRICE
                     self.current_postal_code = postal_code
                     self.current_city = city
+                    self.current_property_type = normalize_property_type(prop_type)
                     
                     immo_prop_type = "apartment" if prop_type == "apartment" else "house"
                     immo_trans_type = "for-rent" if trans_type == "rent" else "for-sale"
@@ -159,7 +160,7 @@ class ImmowebScraper(BaseScraper):
                 surface = int(prop["netHabitableSurface"])
 
             # Title
-            title = item.get("title", "") or f"Apartment in {address}"
+            raw_title = item.get("title", "")
 
             # URL
             url = f"https://www.immoweb.be/en/classified/property/for-sale-or-rent/{listing_id}"
@@ -167,6 +168,13 @@ class ImmowebScraper(BaseScraper):
                 loc_name = loc["locality"].lower().replace(" ", "-")
                 postal = loc.get("postalCode", self.current_postal_code)
                 url = f"https://www.immoweb.be/en/classified/property/for-sale-or-rent/{loc_name}/{postal}/{listing_id}"
+
+            property_type = detect_property_type(
+                fallback=getattr(self, "current_property_type", "apartment"),
+                url=url,
+                title=raw_title,
+            )
+            title = raw_title or fallback_title(property_type, address)
 
             # Images
             images = []
@@ -191,6 +199,7 @@ class ImmowebScraper(BaseScraper):
                 description="",
                 image_urls=images,
                 surface_m2=surface,
+                property_type=property_type,
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse API result: {e}")
@@ -307,7 +316,14 @@ class ImmowebScraper(BaseScraper):
                                     if img_url:
                                         images.append(img_url)
                                         
-                        title = link.get_text(strip=True) or "Apartment"
+                        title = link.get_text(strip=True)
+                        property_type = detect_property_type(
+                            fallback=getattr(self, "current_property_type", "apartment"),
+                            url=href,
+                            title=title,
+                        )
+                        if not title:
+                            title = fallback_title(property_type, address).split(" — ")[0]
                         
                         return Listing(
                             id=listing_id,
@@ -320,6 +336,7 @@ class ImmowebScraper(BaseScraper):
                             description="",
                             image_urls=images,
                             surface_m2=surface,
+                            property_type=property_type,
                         )
                     except json.JSONDecodeError:
                         pass
@@ -338,7 +355,13 @@ class ImmowebScraper(BaseScraper):
                 return None
 
             # Title
-            title = link.get_text(strip=True) or "Apartment"
+            raw_title = link.get_text(strip=True)
+            property_type = detect_property_type(
+                fallback=getattr(self, "current_property_type", "apartment"),
+                url=href,
+                title=raw_title,
+            )
+            title = raw_title or fallback_title(property_type, address).split(" — ")[0]
 
             # Price — look for the aria-hidden span inside price element
             price = 0
@@ -401,6 +424,7 @@ class ImmowebScraper(BaseScraper):
                 description="",  # Will be enriched from detail page
                 image_urls=[image_url] if image_url else [],
                 surface_m2=surface,
+                property_type=property_type,
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse HTML card: {e}")
@@ -500,16 +524,24 @@ class ImmowebScraper(BaseScraper):
             if not (self.current_min_price <= price <= self.current_max_price):
                 return None
 
+            full_url = url if url.startswith("http") else f"https://www.immoweb.be{url}"
+            address = f"{self.current_postal_code} {self.current_city.capitalize()}"
+            property_type = detect_property_type(
+                fallback=getattr(self, "current_property_type", "apartment"),
+                url=full_url,
+                title=str(actual.get("name", "")),
+            )
             return Listing(
                 id=listing_id,
                 platform=self.PLATFORM_NAME,
-                title=actual.get("name", f"Apartment — €{price}/mo"),
+                title=actual.get("name", fallback_title(property_type, address, price)),
                 price=price,
                 bedrooms=MIN_BEDROOMS,
-                address=f"{self.current_postal_code} {self.current_city.capitalize()}",
-                url=url if url.startswith("http") else f"https://www.immoweb.be{url}",
+                address=address,
+                url=full_url,
                 description=actual.get("description", ""),
                 image_urls=[actual["image"]] if actual.get("image") else [],
+                property_type=property_type,
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse JSON listing: {e}")

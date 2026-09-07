@@ -25,6 +25,36 @@ _IMPERSONATE_BROWSERS = [
 ]
 
 
+def normalize_property_type(value: str | None) -> str:
+    """Normalize a raw property-type value to 'house' or 'apartment'."""
+    val = (value or "").strip().lower()
+    if val in {"house", "huis", "huizen", "home", "woning", "maison", "villa"}:
+        return "house"
+    return "apartment"
+
+
+def detect_property_type(*, fallback: str = "apartment", url: str = "", title: str = "") -> str:
+    """Infer house vs apartment from URL/title, falling back to the searched type."""
+    haystack = f"{url or ''} {title or ''}".lower()
+    house_markers = (
+        "/house/", "/huis/", "/huizen/",
+        "house for", "house in", "huis te huur", "huis te koop",
+        "huis in", "woning", "maison", " villa",
+    )
+    if any(marker in haystack for marker in house_markers):
+        return "house"
+    return normalize_property_type(fallback)
+
+
+def fallback_title(property_type: str, location: str, price: int = 0) -> str:
+    """Build a '<Type> in <location>' fallback title."""
+    label = "House" if normalize_property_type(property_type) == "house" else "Apartment"
+    location = (location or "").strip() or "Unknown location"
+    if price:
+        return f"{label} in {location} — €{price}/mo"
+    return f"{label} in {location}"
+
+
 @dataclass
 class Listing:
     """Standardized rental listing across all platforms."""
@@ -41,6 +71,7 @@ class Listing:
     epc_label: Optional[str] = None   # energy label if available
     surface_m2: Optional[int] = None
     posted_date: Optional[str] = None
+    property_type: str = "apartment"  # "apartment" | "house"
 
     # Scoring fields (populated later)
     text_score: Optional[float] = None
@@ -68,6 +99,7 @@ class Listing:
             "epc_label": self.epc_label,
             "surface_m2": self.surface_m2,
             "posted_date": self.posted_date,
+            "property_type": self.property_type,
             "text_score": self.text_score,
             "photo_score": self.photo_score,
             "final_score": self.final_score,

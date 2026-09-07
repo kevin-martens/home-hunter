@@ -5,6 +5,7 @@ from __future__ import annotations
 import html
 import logging
 import os
+import re
 import smtplib
 import unicodedata
 from datetime import datetime
@@ -78,11 +79,68 @@ def _platform_badge(platform: str) -> str:
     )
 
 
+def _is_house_listing(listing: Listing) -> bool:
+    """Return True when the listing is a house (not an apartment).
+
+    Prefers the tracked ``property_type`` but falls back to URL/title
+    inference so listings scraped before the field existed still render
+    correctly.
+    """
+    prop_type = str(getattr(listing, "property_type", "") or "").strip().lower()
+    if prop_type == "house":
+        return True
+    haystack = f"{listing.url or ''} {listing.title or ''}".lower()
+    house_markers = (
+        "/house/", "/huis/", "/huizen/",
+        "house for", "house in", "huis te huur", "huis te koop",
+        "huis in", "woning", "maison",
+    )
+    if any(marker in haystack for marker in house_markers):
+        return True
+    return False
+
+
+def _property_label(listing: Listing) -> str:
+    """Display label: 'House' or 'Apartment'."""
+    return "House" if _is_house_listing(listing) else "Apartment"
+
+
+_FALLBACK_TITLE_RE = re.compile(
+    r"^(apartment|appartment|appartement|house|huis|property|woning|maison)\b\s*(in\s+(.*))?$",
+    re.IGNORECASE | re.DOTALL,
+)
+
+
+def _display_title(listing: Listing) -> str:
+    """Return the card title with a correct 'House/Apartment in <location>' prefix.
+
+    Auto-generated fallback titles (e.g. 'Apartment in 9620 Zottegem — ...')
+    get their prefix corrected. Real scraped titles are left untouched.
+    """
+    label = _property_label(listing)
+    raw_title = _clean_text(listing.title or "").strip()
+    address = _clean_text(listing.address or "").strip()
+
+    # Split off a trailing " — address" suffix that scrapers append.
+    main_part, sep, suffix = raw_title.partition(" — ")
+    match = _FALLBACK_TITLE_RE.match(main_part.strip()) if main_part else None
+    if match and match.group(2):
+        # e.g. "Apartment in 9620 Zottegem" -> "House in 9620 Zottegem"
+        location_part = (match.group(3) or "").strip() or address or "Unknown location"
+        corrected = f"{label} in {location_part}"
+        return f"{corrected}{sep}{suffix}" if sep else corrected
+    if match:
+        # Bare fallback like "Apartment" -> "House in <address>"
+        location_part = address or "Unknown location"
+        return f"{label} in {location_part}"
+    return raw_title or f"{label} in {address or 'Unknown location'}"
+
+
 def _build_listing_cards(listings: list[Listing]) -> str:
     cards_html = ""
 
     for index, listing in enumerate(listings, start=1):
-        title = _clean_text(listing.title)
+        title = _display_title(listing)
         address = _clean_text(listing.address)
         reasoning = _clean_text(listing.score_reasoning or "")
         score = listing.final_score
@@ -347,7 +405,7 @@ def _build_daily_plain_text(listings: list[Listing], date_str: str) -> str:
         lines.append("")
         for index, listing in enumerate(listings, start=1):
             score = f"{listing.final_score:.1f}" if listing.final_score is not None else "-"
-            lines.append(f"#{index} [{score}/10] {_ascii_safe(listing.title)}")
+            lines.append(f"#{index} [{score}/10] {_ascii_safe(_display_title(listing))}")
             lines.append(f"    EUR {listing.price}/mo - {_ascii_safe(listing.address)}")
             lines.append(f"    {listing.url}")
             lines.append("")
@@ -363,7 +421,7 @@ def _build_weekly_plain_text(listings: list[Listing], week_label: str) -> str:
         lines.append("")
         for index, listing in enumerate(listings, start=1):
             score = f"{listing.final_score:.1f}" if listing.final_score is not None else "-"
-            lines.append(f"#{index} [{score}/10] {_ascii_safe(listing.title)}")
+            lines.append(f"#{index} [{score}/10] {_ascii_safe(_display_title(listing))}")
             lines.append(f"    EUR {listing.price}/mo - {_ascii_safe(listing.address)}")
             lines.append(f"    {listing.url}")
             lines.append("")
@@ -440,7 +498,7 @@ def send_digest(listings: list[Listing]) -> bool:
     count = len(listings)
     city_formatted = TARGET_CITY.capitalize()
     if count > 0:
-        subject = f"Apartment Hunter: {count} fresh apartment{'s' if count != 1 else ''} in {city_formatted} - {date_str}"
+        subject = f"Apartment Hunter: {count} fresh listing{'s' if count != 1 else ''} in {city_formatted} - {date_str}"
     else:
         subject = f"Apartment Hunter: no fresh opportunities today - {date_str}"
     return _send_email(
