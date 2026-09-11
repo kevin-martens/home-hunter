@@ -48,10 +48,12 @@ def detect_property_type(*, fallback: str = "apartment", url: str = "", title: s
 
 def fallback_title(property_type: str, location: str, price: int = 0) -> str:
     """Build a '<Type> in <location>' fallback title."""
-    label = "House" if normalize_property_type(property_type) == "house" else "Apartment"
+    is_house = normalize_property_type(property_type) == "house"
+    label = "House" if is_house else "Apartment"
     location = (location or "").strip() or "Unknown location"
     if price:
-        return f"{label} in {location} — €{price}/mo"
+        price_tag = f"€{price}" if is_house else f"€{price}/mo"
+        return f"{label} in {location} — {price_tag}"
     return f"{label} in {location}"
 
 

@@ -12,7 +12,7 @@ from datetime import datetime
 from email.message import EmailMessage
 from email.policy import SMTPUTF8
 
-from scrapers.base import Listing
+from scrapers.base import Listing, normalize_property_type
 from config import TARGET_POSTAL_CODE, TARGET_CITY, MIN_PRICE, MAX_PRICE, MIN_BEDROOMS
 
 logger = logging.getLogger(__name__)
@@ -87,13 +87,13 @@ def _is_house_listing(listing: Listing) -> bool:
     correctly.
     """
     prop_type = str(getattr(listing, "property_type", "") or "").strip().lower()
-    if prop_type == "house":
+    if normalize_property_type(prop_type) == "house":
         return True
     haystack = f"{listing.url or ''} {listing.title or ''}".lower()
     house_markers = (
-        "/house/", "/huis/", "/huizen/",
-        "house for", "house in", "huis te huur", "huis te koop",
-        "huis in", "woning", "maison",
+        "/house/", "/huis/", "/huizen/", "/home/",
+        "house for", "house in", "home for", "home in", "huis te huur", "huis te koop",
+        "huis in", "woning", "maison", "villa",
     )
     if any(marker in haystack for marker in house_markers):
         return True
@@ -103,6 +103,13 @@ def _is_house_listing(listing: Listing) -> bool:
 def _property_label(listing: Listing) -> str:
     """Display label: 'House' or 'Apartment'."""
     return "House" if _is_house_listing(listing) else "Apartment"
+
+
+def _format_price(listing: Listing) -> str:
+    """Format the listing price for email display ('EUR <price>' for houses, 'EUR <price>/mo' for apartments)."""
+    if _is_house_listing(listing):
+        return f"EUR {listing.price}"
+    return f"EUR {listing.price}/mo"
 
 
 _FALLBACK_TITLE_RE = re.compile(
@@ -128,11 +135,16 @@ def _display_title(listing: Listing) -> str:
         # e.g. "Apartment in 9620 Zottegem" -> "House in 9620 Zottegem"
         location_part = (match.group(3) or "").strip() or address or "Unknown location"
         corrected = f"{label} in {location_part}"
-        return f"{corrected}{sep}{suffix}" if sep else corrected
+        if sep:
+            suffix_cleaned = re.sub(r"/mo\b", "", suffix).rstrip() if _is_house_listing(listing) else suffix
+            return f"{corrected}{sep}{suffix_cleaned}"
+        return corrected
     if match:
         # Bare fallback like "Apartment" -> "House in <address>"
         location_part = address or "Unknown location"
         return f"{label} in {location_part}"
+    if _is_house_listing(listing):
+        return re.sub(r"/mo\b", "", raw_title).rstrip() or f"{label} in {address or 'Unknown location'}"
     return raw_title or f"{label} in {address or 'Unknown location'}"
 
 
@@ -210,7 +222,7 @@ def _build_listing_cards(listings: list[Listing]) -> str:
                     </h3>
 
                     <p style="margin:0 0 6px;font-size:18px;font-weight:700;color:#059669">
-                        EUR {listing.price}/mo
+                        {_format_price(listing)}
                     </p>
                     <p style="margin:0 0 6px;font-size:13px;color:#6B7280">
                         {html.escape(_ascii_safe(address))}
@@ -406,7 +418,7 @@ def _build_daily_plain_text(listings: list[Listing], date_str: str) -> str:
         for index, listing in enumerate(listings, start=1):
             score = f"{listing.final_score:.1f}" if listing.final_score is not None else "-"
             lines.append(f"#{index} [{score}/10] {_ascii_safe(_display_title(listing))}")
-            lines.append(f"    EUR {listing.price}/mo - {_ascii_safe(listing.address)}")
+            lines.append(f"    {_format_price(listing)} - {_ascii_safe(listing.address)}")
             lines.append(f"    {listing.url}")
             lines.append("")
     else:
@@ -422,7 +434,7 @@ def _build_weekly_plain_text(listings: list[Listing], week_label: str) -> str:
         for index, listing in enumerate(listings, start=1):
             score = f"{listing.final_score:.1f}" if listing.final_score is not None else "-"
             lines.append(f"#{index} [{score}/10] {_ascii_safe(_display_title(listing))}")
-            lines.append(f"    EUR {listing.price}/mo - {_ascii_safe(listing.address)}")
+            lines.append(f"    {_format_price(listing)} - {_ascii_safe(listing.address)}")
             lines.append(f"    {listing.url}")
             lines.append("")
     else:

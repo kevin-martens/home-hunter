@@ -164,12 +164,14 @@ def log_ranked_results(listings: list[Listing], heading: str) -> None:
 
     for index, listing in enumerate(listings, start=1):
         score_str = f"{listing.final_score:.1f}" if listing.final_score is not None else "-"
+        price_unit = "" if getattr(listing, "property_type", "") == "house" else "/mo"
         logger.info(
-            "#%s [%s/10] %s - EUR %s/mo - %s (%s)",
+            "#%s [%s/10] %s - EUR %s%s - %s (%s)",
             index,
             score_str,
             listing.title,
             listing.price,
+            price_unit,
             listing.address,
             listing.platform,
         )
