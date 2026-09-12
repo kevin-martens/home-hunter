@@ -8,7 +8,15 @@ import re
 
 from bs4 import BeautifulSoup
 
-from scrapers.base import BaseScraper, Listing, detect_property_type, fallback_title, normalize_property_type
+from scrapers.base import (
+    BaseScraper,
+    Listing,
+    detect_property_type,
+    detect_transaction_type,
+    fallback_title,
+    normalize_property_type,
+    normalize_transaction_type,
+)
 from config import TARGET_LOCATIONS, PROPERTY_TYPES, TRANSACTION_TYPES, MIN_PRICE, MAX_PRICE, MIN_BUY_PRICE, MAX_BUY_PRICE, MIN_BEDROOMS
 
 logger = logging.getLogger(__name__)
@@ -36,6 +44,7 @@ class ImmoscoopScraper(BaseScraper):
                     self.current_postal_code = postal_code
                     self.current_city = city
                     self.current_property_type = normalize_property_type(prop_type)
+                    self.current_transaction_type = normalize_transaction_type(trans_type)
                     
                     immo_prop_type = "appartement" if prop_type == "apartment" else "huis"
                     immo_trans_type = "te-huur" if trans_type == "rent" else "te-koop"
@@ -168,6 +177,12 @@ class ImmoscoopScraper(BaseScraper):
                         fallback=getattr(self, "current_property_type", "apartment"),
                         url=href,
                         title=title_text,
+                    ),
+                    transaction_type=detect_transaction_type(
+                        fallback=getattr(self, "current_transaction_type", "rent"),
+                        url=href,
+                        title=title_text,
+                        price=price,
                     ),
                 )
             )
@@ -309,7 +324,7 @@ class ImmoscoopScraper(BaseScraper):
             return Listing(
                 id=listing_id,
                 platform=self.PLATFORM_NAME,
-                title=item.get("name", fallback_title(property_type, self.current_city.capitalize(), price)),
+                title=item.get("name", fallback_title(property_type, self.current_city.capitalize(), price, getattr(self, "current_transaction_type", "rent"))),
                 price=price,
                 bedrooms=MIN_BEDROOMS,
                 address=self._extract_address(item),
@@ -317,6 +332,12 @@ class ImmoscoopScraper(BaseScraper):
                 description=item.get("description", ""),
                 image_urls=[item["image"]] if item.get("image") else [],
                 property_type=property_type,
+                transaction_type=detect_transaction_type(
+                    fallback=getattr(self, "current_transaction_type", "rent"),
+                    url=full_url,
+                    title=str(item.get("name", "")),
+                    price=price,
+                ),
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse JSON-LD: {e}")
@@ -375,6 +396,12 @@ class ImmoscoopScraper(BaseScraper):
                     fallback=getattr(self, "current_property_type", "apartment"),
                     url=url,
                     title=str(item.get("title", item.get("name", ""))),
+                ),
+                transaction_type=detect_transaction_type(
+                    fallback=getattr(self, "current_transaction_type", "rent"),
+                    url=url,
+                    title=str(item.get("title", item.get("name", ""))),
+                    price=price,
                 ),
             )
         except Exception as e:
@@ -443,6 +470,12 @@ class ImmoscoopScraper(BaseScraper):
                 image_urls=[image_url] if image_url else [],
                 surface_m2=surface,
                 property_type=property_type,
+                transaction_type=detect_transaction_type(
+                    fallback=getattr(self, "current_transaction_type", "rent"),
+                    url=href,
+                    title=title,
+                    price=price,
+                ),
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse HTML card: {e}")

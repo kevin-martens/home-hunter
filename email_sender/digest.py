@@ -12,7 +12,7 @@ from datetime import datetime
 from email.message import EmailMessage
 from email.policy import SMTPUTF8
 
-from scrapers.base import Listing, normalize_property_type
+from scrapers.base import Listing, normalize_property_type, normalize_transaction_type
 from config import TARGET_POSTAL_CODE, TARGET_CITY, MIN_PRICE, MAX_PRICE, MIN_BEDROOMS
 
 logger = logging.getLogger(__name__)
@@ -105,9 +105,33 @@ def _property_label(listing: Listing) -> str:
     return "House" if _is_house_listing(listing) else "Apartment"
 
 
+def _is_buy_listing(listing: Listing) -> bool:
+    """Return True when the listing is for sale / buy (not a rental).
+
+    Prefers the tracked ``transaction_type`` but falls back to URL, title,
+    and price threshold inference so listings scraped before the field existed
+    still render correctly.
+    """
+    trans_type = str(getattr(listing, "transaction_type", "") or "").strip().lower()
+    if normalize_transaction_type(trans_type) == "buy":
+        return True
+    haystack = f"{listing.url or ''} {listing.title or ''}".lower()
+    buy_markers = (
+        "/for-sale", "/te-koop", "/kopen", "/a-vendre",
+        "for sale", "te koop", "à vendre", "a vendre", "tekoop", "forsale",
+        "koopappartement", "koopwoning",
+    )
+    if any(marker in haystack for marker in buy_markers):
+        return True
+    # If price exceeds normal monthly rental budgets (e.g. > €10,000), it is a purchase
+    if getattr(listing, "price", 0) and listing.price > 10000:
+        return True
+    return False
+
+
 def _format_price(listing: Listing) -> str:
-    """Format the listing price for email display ('EUR <price>' for houses, 'EUR <price>/mo' for apartments)."""
-    if _is_house_listing(listing):
+    """Format the listing price for email display ('EUR <price>' for houses or purchases, 'EUR <price>/mo' for rentals)."""
+    if _is_house_listing(listing) or _is_buy_listing(listing):
         return f"EUR {listing.price}"
     return f"EUR {listing.price}/mo"
 
@@ -127,6 +151,7 @@ def _display_title(listing: Listing) -> str:
     label = _property_label(listing)
     raw_title = _clean_text(listing.title or "").strip()
     address = _clean_text(listing.address or "").strip()
+    is_non_monthly = _is_house_listing(listing) or _is_buy_listing(listing)
 
     # Split off a trailing " — address" suffix that scrapers append.
     main_part, sep, suffix = raw_title.partition(" — ")
@@ -136,14 +161,14 @@ def _display_title(listing: Listing) -> str:
         location_part = (match.group(3) or "").strip() or address or "Unknown location"
         corrected = f"{label} in {location_part}"
         if sep:
-            suffix_cleaned = re.sub(r"/mo\b", "", suffix).rstrip() if _is_house_listing(listing) else suffix
+            suffix_cleaned = re.sub(r"/mo\b", "", suffix).rstrip() if is_non_monthly else suffix
             return f"{corrected}{sep}{suffix_cleaned}"
         return corrected
     if match:
         # Bare fallback like "Apartment" -> "House in <address>"
         location_part = address or "Unknown location"
         return f"{label} in {location_part}"
-    if _is_house_listing(listing):
+    if is_non_monthly:
         return re.sub(r"/mo\b", "", raw_title).rstrip() or f"{label} in {address or 'Unknown location'}"
     return raw_title or f"{label} in {address or 'Unknown location'}"
 

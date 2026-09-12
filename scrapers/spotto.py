@@ -7,7 +7,15 @@ import re
 
 from bs4 import BeautifulSoup
 
-from scrapers.base import BaseScraper, Listing, detect_property_type, fallback_title, normalize_property_type
+from scrapers.base import (
+    BaseScraper,
+    Listing,
+    detect_property_type,
+    detect_transaction_type,
+    fallback_title,
+    normalize_property_type,
+    normalize_transaction_type,
+)
 from config import TARGET_LOCATIONS, PROPERTY_TYPES, TRANSACTION_TYPES, MIN_PRICE, MAX_PRICE, MIN_BUY_PRICE, MAX_BUY_PRICE, MIN_BEDROOMS
 
 logger = logging.getLogger(__name__)
@@ -31,6 +39,7 @@ class SpottoScraper(BaseScraper):
                     self.current_postal_code = postal_code
                     self.current_city = city
                     self.current_property_type = normalize_property_type(prop_type)
+                    self.current_transaction_type = normalize_transaction_type(trans_type)
                     
                     spotto_prop_type = "appartement" if prop_type == "apartment" else "huis"
                     spotto_trans_type = "te-huur" if trans_type == "rent" else "te-koop"
@@ -152,6 +161,12 @@ class SpottoScraper(BaseScraper):
                 image_urls=images,
                 surface_m2=surface,
                 property_type=property_type,
+                transaction_type=detect_transaction_type(
+                    fallback=getattr(self, "current_transaction_type", "rent"),
+                    url=full_url,
+                    title=title,
+                    price=price,
+                ),
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse card: {e}")

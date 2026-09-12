@@ -18,7 +18,15 @@ import re
 
 from bs4 import BeautifulSoup
 
-from scrapers.base import BaseScraper, Listing, detect_property_type, fallback_title, normalize_property_type
+from scrapers.base import (
+    BaseScraper,
+    Listing,
+    detect_property_type,
+    detect_transaction_type,
+    fallback_title,
+    normalize_property_type,
+    normalize_transaction_type,
+)
 from config import TARGET_LOCATIONS, PROPERTY_TYPES, TRANSACTION_TYPES, MIN_PRICE, MAX_PRICE, MIN_BUY_PRICE, MAX_BUY_PRICE, MIN_BEDROOMS
 
 logger = logging.getLogger(__name__)
@@ -48,6 +56,7 @@ class ImmowebScraper(BaseScraper):
                     self.current_postal_code = postal_code
                     self.current_city = city
                     self.current_property_type = normalize_property_type(prop_type)
+                    self.current_transaction_type = normalize_transaction_type(trans_type)
                     
                     immo_prop_type = "apartment" if prop_type == "apartment" else "house"
                     immo_trans_type = "for-rent" if trans_type == "rent" else "for-sale"
@@ -200,6 +209,12 @@ class ImmowebScraper(BaseScraper):
                 image_urls=images,
                 surface_m2=surface,
                 property_type=property_type,
+                transaction_type=detect_transaction_type(
+                    fallback=getattr(self, "current_transaction_type", "rent"),
+                    url=url,
+                    title=raw_title,
+                    price=price,
+                ),
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse API result: {e}")
@@ -337,6 +352,12 @@ class ImmowebScraper(BaseScraper):
                             image_urls=images,
                             surface_m2=surface,
                             property_type=property_type,
+                            transaction_type=detect_transaction_type(
+                                fallback=getattr(self, "current_transaction_type", "rent"),
+                                url=href,
+                                title=title,
+                                price=price,
+                            ),
                         )
                     except json.JSONDecodeError:
                         pass
@@ -425,6 +446,12 @@ class ImmowebScraper(BaseScraper):
                 image_urls=[image_url] if image_url else [],
                 surface_m2=surface,
                 property_type=property_type,
+                transaction_type=detect_transaction_type(
+                    fallback=getattr(self, "current_transaction_type", "rent"),
+                    url=href,
+                    title=title,
+                    price=price,
+                ),
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse HTML card: {e}")
@@ -534,7 +561,7 @@ class ImmowebScraper(BaseScraper):
             return Listing(
                 id=listing_id,
                 platform=self.PLATFORM_NAME,
-                title=actual.get("name", fallback_title(property_type, address, price)),
+                title=actual.get("name", fallback_title(property_type, address, price, getattr(self, "current_transaction_type", "rent"))),
                 price=price,
                 bedrooms=MIN_BEDROOMS,
                 address=address,
@@ -542,6 +569,12 @@ class ImmowebScraper(BaseScraper):
                 description=actual.get("description", ""),
                 image_urls=[actual["image"]] if actual.get("image") else [],
                 property_type=property_type,
+                transaction_type=detect_transaction_type(
+                    fallback=getattr(self, "current_transaction_type", "rent"),
+                    url=full_url,
+                    title=str(actual.get("name", "")),
+                    price=price,
+                ),
             )
         except Exception as e:
             logger.debug(f"[{self.PLATFORM_NAME}] Failed to parse JSON listing: {e}")

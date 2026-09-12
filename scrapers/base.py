@@ -46,13 +46,55 @@ def detect_property_type(*, fallback: str = "apartment", url: str = "", title: s
     return normalize_property_type(fallback)
 
 
-def fallback_title(property_type: str, location: str, price: int = 0) -> str:
+def normalize_transaction_type(value: str | None) -> str:
+    """Normalize a raw transaction-type value to 'buy' or 'rent'."""
+    val = (value or "").strip().lower()
+    if val in {"buy", "koop", "te-koop", "te koop", "sale", "for-sale", "for sale", "a-vendre", "à vendre", "kopen"}:
+        return "buy"
+    return "rent"
+
+
+def detect_transaction_type(
+    *,
+    fallback: str = "rent",
+    url: str = "",
+    title: str = "",
+    price: int = 0,
+) -> str:
+    """Infer buy vs rent from URL/title/price, falling back to searched transaction type."""
+    haystack = f"{url or ''} {title or ''}".lower()
+    buy_markers = (
+        "/for-sale", "/te-koop", "/kopen", "/a-vendre",
+        "for sale", "te koop", "à vendre", "a vendre", "tekoop", "forsale",
+        "koopappartement", "koopwoning",
+    )
+    rent_markers = (
+        "/for-rent", "/te-huur", "/huren", "/a-louer",
+        "for rent", "te huur", "à louer", "a louer", "tehuur", "forrent",
+        "huurappartement", "huurwoning",
+    )
+    if any(marker in haystack for marker in buy_markers):
+        return "buy"
+    if any(marker in haystack for marker in rent_markers):
+        return "rent"
+    if price and price > 10000:
+        return "buy"
+    return normalize_transaction_type(fallback)
+
+
+def fallback_title(
+    property_type: str,
+    location: str,
+    price: int = 0,
+    transaction_type: str = "rent",
+) -> str:
     """Build a '<Type> in <location>' fallback title."""
     is_house = normalize_property_type(property_type) == "house"
+    is_buy = normalize_transaction_type(transaction_type) == "buy" or (price > 10000 if price else False)
     label = "House" if is_house else "Apartment"
     location = (location or "").strip() or "Unknown location"
     if price:
-        price_tag = f"€{price}" if is_house else f"€{price}/mo"
+        price_tag = f"€{price}" if (is_house or is_buy) else f"€{price}/mo"
         return f"{label} in {location} — {price_tag}"
     return f"{label} in {location}"
 
@@ -64,7 +106,7 @@ class Listing:
     id: str                           # platform-specific unique ID
     platform: str                     # "immoweb" | "zimmo" | "immoscoop"
     title: str
-    price: int                        # monthly rent in EUR
+    price: int                        # price in EUR (rent or buy)
     bedrooms: int
     address: str
     url: str                          # direct link to listing
@@ -74,6 +116,7 @@ class Listing:
     surface_m2: Optional[int] = None
     posted_date: Optional[str] = None
     property_type: str = "apartment"  # "apartment" | "house"
+    transaction_type: str = "rent"    # "rent" | "buy"
 
     # Scoring fields (populated later)
     text_score: Optional[float] = None
@@ -102,6 +145,7 @@ class Listing:
             "surface_m2": self.surface_m2,
             "posted_date": self.posted_date,
             "property_type": self.property_type,
+            "transaction_type": self.transaction_type,
             "text_score": self.text_score,
             "photo_score": self.photo_score,
             "final_score": self.final_score,

@@ -9,7 +9,7 @@ import unicodedata
 from datetime import date, datetime
 from pathlib import Path
 
-from scrapers.base import Listing
+from scrapers.base import Listing, detect_transaction_type
 
 logger = logging.getLogger(__name__)
 
@@ -178,6 +178,7 @@ def upsert_listing_record(
             "surface_m2": listing.surface_m2,
             "posted_date": listing.posted_date,
             "property_type": getattr(listing, "property_type", "apartment") or "apartment",
+            "transaction_type": getattr(listing, "transaction_type", "rent") or "rent",
             "text_score": listing.text_score,
             "photo_score": listing.photo_score,
             "final_score": listing.final_score,
@@ -261,6 +262,17 @@ def listing_from_record(record: dict) -> Listing:
                 "huis in", "woning", "maison",
             )
         ) else "apartment"
+    stored_trans = str(record.get("transaction_type", "") or "").strip().lower()
+    if stored_trans not in {"buy", "rent"}:
+        url = str(record.get("url", "") or "")
+        title = str(record.get("title", "") or "")
+        price_val = int(record.get("price", 0) or 0)
+        stored_trans = detect_transaction_type(
+            fallback="rent",
+            url=url,
+            title=title,
+            price=price_val,
+        )
     return Listing(
         id=str(record.get("id", "")),
         platform=record.get("platform", "unknown"),
@@ -275,6 +287,7 @@ def listing_from_record(record: dict) -> Listing:
         surface_m2=record.get("surface_m2"),
         posted_date=record.get("posted_date"),
         property_type=stored_type,
+        transaction_type=stored_trans,
         text_score=record.get("text_score"),
         photo_score=record.get("photo_score"),
         final_score=record.get("final_score"),
