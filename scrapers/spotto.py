@@ -48,16 +48,23 @@ class SpottoScraper(BaseScraper):
                     # e.g. https://www.spotto.be/nl/te-huur/9000-gent/appartement/overzicht?minPrice=800&maxPrice=1100
                     search_url = f"https://www.spotto.be/nl/{spotto_trans_type}/{postal_code}-{city.lower()}/{spotto_prop_type}/overzicht?minPrice={self.current_min_price}&maxPrice={self.current_max_price}"
                     
+                    seen_search_ids = set()
                     for page in range(1, self.MAX_PAGES + 1):
                         paged_url = f"{search_url}&page={page}" if page > 1 else search_url
                         page_listings = self._scrape_search_page(paged_url)
-                        
-                        if not page_listings:
+
+                        new_page_listings = [
+                            l for l in page_listings if l.id not in seen_search_ids
+                        ]
+                        if not new_page_listings:
                             logger.info(f"[{self.PLATFORM_NAME}] No more results on page {page} for {city} {prop_type} {trans_type}")
                             break
 
-                        listings.extend(page_listings)
-                        logger.info(f"[{self.PLATFORM_NAME}] Page {page} ({city} {prop_type} {trans_type}): {len(page_listings)} listings")
+                        for l in new_page_listings:
+                            seen_search_ids.add(l.id)
+
+                        listings.extend(new_page_listings)
+                        logger.info(f"[{self.PLATFORM_NAME}] Page {page} ({city} {prop_type} {trans_type}): {len(new_page_listings)} listings")
 
         return listings
 
@@ -73,10 +80,12 @@ class SpottoScraper(BaseScraper):
         cards = soup.select("a.property-card")
         if not cards:
             cards = soup.select("a[href^='/nl/p/']")
-            
+
+        seen_card_ids = set()
         for card in cards:
             listing = self._parse_html_card(card)
-            if listing:
+            if listing and listing.id not in seen_card_ids:
+                seen_card_ids.add(listing.id)
                 listings.append(listing)
 
         return listings
@@ -86,14 +95,15 @@ class SpottoScraper(BaseScraper):
             href = card.get("href", "")
             if not href:
                 return None
-                
-            match = re.search(r'/([A-Za-z0-9_-]{20,25})$', href)
-            listing_id = match.group(1) if match else href.split("/")[-1]
+
+            clean_href = href.split("?")[0].rstrip("/")
+            match = re.search(r'/([A-Za-z0-9_-]{20,25})$', clean_href)
+            listing_id = match.group(1) if match else clean_href.split("/")[-1]
             if not listing_id:
                 return None
 
-            full_url = f"https://www.spotto.be{href}" if not href.startswith("http") else href
-            
+            full_url = f"https://www.spotto.be{clean_href}" if not clean_href.startswith("http") else clean_href
+
             wrapper = card.find_parent("div", class_=re.compile("card-result-wrapper"))
             if not wrapper:
                 wrapper = card

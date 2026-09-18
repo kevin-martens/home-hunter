@@ -42,6 +42,7 @@ Respond with this exact JSON format:
     def __init__(self):
         self.api_key = os.environ.get("OPENROUTER_API_KEY", "")
         self.client = None
+        self.rate_limited = False
 
         if self.api_key:
             try:
@@ -61,7 +62,7 @@ Respond with this exact JSON format:
     @property
     def is_available(self) -> bool:
         """Check if the scorer is ready to use."""
-        return self.client is not None
+        return self.client is not None and not self.rate_limited
 
     def score_listing(self, listing: Listing) -> float | None:
         """
@@ -133,9 +134,16 @@ Respond with this exact JSON format:
                         f"[photo_scorer] Rate limited (attempt {attempt + 1}/"
                         f"{self.MAX_RETRIES + 1})"
                     )
+                    if "daily" in error_str or "tpd" in error_str or "rpd" in error_str:
+                        logger.warning("[photo_scorer] Daily vision quota exhausted.")
+                        self.rate_limited = True
+                        return None
+
                     if attempt < self.MAX_RETRIES:
                         time.sleep(self.RETRY_DELAY * (attempt + 1))
                         continue
+
+                    self.rate_limited = True
                     return None
                 if "developer instruction is not enabled" in error_str:
                     logger.warning("[photo_scorer] Provider rejected system prompt, skipping")
@@ -162,12 +170,33 @@ Respond with this exact JSON format:
         scored = 0
 
         for i, listing in enumerate(listings):
+            if self.rate_limited:
+                remaining_count = len(listings) - i
+                logger.warning(
+                    f"[photo_scorer] Rate limit reached. Stopping photo scoring for remaining "
+                    f"{remaining_count} listings."
+                )
+                for rem_listing in listings[i:]:
+                    rem_listing.photo_score = None
+                break
+
             score = self.score_listing(listing)
             if score is not None:
                 listing.photo_score = score
                 scored += 1
             else:
                 listing.photo_score = None
+
+            if self.rate_limited:
+                remaining_count = len(listings) - (i + 1)
+                if remaining_count > 0:
+                    logger.warning(
+                        f"[photo_scorer] Rate limit reached. Stopping photo scoring for remaining "
+                        f"{remaining_count} listings."
+                    )
+                    for rem_listing in listings[i + 1:]:
+                        rem_listing.photo_score = None
+                break
 
             # Rate limit: OpenRouter free tier is 20 req/min
             if i < len(listings) - 1:

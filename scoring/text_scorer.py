@@ -69,6 +69,7 @@ Respond with this exact JSON format:
     def __init__(self):
         self.api_key = os.environ.get("GROQ_API_KEY", "")
         self.client = None
+        self.rate_limited = False
 
         if self.api_key:
             try:
@@ -85,7 +86,7 @@ Respond with this exact JSON format:
     @property
     def is_available(self) -> bool:
         """Check if the scorer is ready to use."""
-        return self.client is not None
+        return self.client is not None and not self.rate_limited
 
     def score_listing(self, listing: Listing) -> tuple[float, str]:
         """
@@ -145,14 +146,35 @@ Respond with this exact JSON format:
 
             except Exception as e:
                 error_str = str(e).lower()
-                if "rate_limit" in error_str or "429" in error_str:
+                is_rate_limit = any(
+                    k in error_str
+                    for k in (
+                        "rate_limit",
+                        "rate limit",
+                        "429",
+                        "too many requests",
+                        "quota",
+                        "tpd",
+                        "rpd",
+                    )
+                )
+                if is_rate_limit:
                     logger.warning(
                         f"[text_scorer] Rate limited (attempt {attempt + 1}/"
                         f"{self.MAX_RETRIES + 1})"
                     )
+                    # If daily quota / limit reached, stop immediately without further retries
+                    if "daily" in error_str or "tpd" in error_str or "rpd" in error_str or "tokens per day" in error_str:
+                        logger.warning("[text_scorer] Daily Groq quota exhausted.")
+                        self.rate_limited = True
+                        return DEFAULT_SCORE, "Rate limited (daily quota exhausted) — unranked"
+
                     if attempt < self.MAX_RETRIES:
                         time.sleep(self.RETRY_DELAY * (attempt + 1))
                         continue
+
+                    # Exhausted retries due to rate limit — stop attempting for subsequent listings
+                    self.rate_limited = True
                     return DEFAULT_SCORE, "Rate limited — unranked"
                 else:
                     logger.error(f"[text_scorer] Scoring failed: {e}")
@@ -172,17 +194,40 @@ Respond with this exact JSON format:
         logger.info(f"[text_scorer] Scoring {len(listings)} listings...")
 
         for i, listing in enumerate(listings):
+            if self.rate_limited:
+                remaining_count = len(listings) - i
+                logger.warning(
+                    f"[text_scorer] Rate limit reached. Stopping Groq API calls for remaining "
+                    f"{remaining_count} listings and defaulting to {DEFAULT_SCORE:.1f}/10."
+                )
+                for rem_listing in listings[i:]:
+                    rem_listing.text_score = DEFAULT_SCORE
+                    rem_listing.score_reasoning = DEFAULT_REASONING
+                break
+
             score, reasoning = self.score_listing(listing)
             listing.text_score = score
             listing.score_reasoning = reasoning
-
-            # Small delay between API calls to avoid rate limiting
-            if i < len(listings) - 1:
-                time.sleep(1)
 
             logger.info(
                 f"[text_scorer] ({i + 1}/{len(listings)}) "
                 f"{listing.platform}:{listing.id} → {score:.1f}/10"
             )
+
+            if self.rate_limited:
+                remaining_count = len(listings) - (i + 1)
+                if remaining_count > 0:
+                    logger.warning(
+                        f"[text_scorer] Rate limit reached. Stopping Groq API calls for remaining "
+                        f"{remaining_count} listings and defaulting to {DEFAULT_SCORE:.1f}/10."
+                    )
+                    for rem_listing in listings[i + 1:]:
+                        rem_listing.text_score = DEFAULT_SCORE
+                        rem_listing.score_reasoning = DEFAULT_REASONING
+                break
+
+            # Small delay between API calls to avoid rate limiting
+            if i < len(listings) - 1:
+                time.sleep(1)
 
         return listings
