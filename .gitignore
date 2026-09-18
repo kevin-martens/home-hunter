@@ -30,6 +30,7 @@ Thumbs.db
 .env
 cron.log
 logs/
+hunter.log
 
 # Local search database and history files
 data/*.json
