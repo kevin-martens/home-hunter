@@ -1,8 +1,11 @@
 """AI text scoring using Groq API for 'modern & clean' vibes."""
 
+from __future__ import annotations
+
 import json
 import logging
 import os
+import re
 import time
 
 from scrapers.base import Listing
@@ -17,44 +20,45 @@ DEFAULT_REASONING = "AI scoring unavailable — unranked"
 class TextScorer:
     """Score listing descriptions for modern/clean vibes using Groq API."""
 
-    MODEL = "openai/gpt-oss-120b"
+    MODEL = os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b")
     MAX_RETRIES = 2
     RETRY_DELAY = 5  # seconds
 
-    SYSTEM_PROMPT = """You are a real estate quality analyzer specializing in Belgian rental apartments. 
-You evaluate apartment listings for a young 25-year-old professional working in IT. Keep in mind that the target audience is looking for contemporary, well-maintained apartments with modern finishes.
+    SYSTEM_PROMPT = """You are a real estate quality analyzer specializing in Belgian residential properties (apartments and houses, both rental and purchase). 
+You evaluate listings for a young professional working in IT looking for contemporary, comfortable, and well-maintained living spaces.
 
-Scoring priorities (in order):
-1. Parking: minimum 1 garage space or covered parking spot is a big plus
-2. Heat pump heating system — strongly preferred
-3. EPC label A or B — preferred
-4. Modern & renovated finish
-5. Edge of city / residential area preferred over city centre (like countryside or suburban feel, good for biking - ps extra storage space for bike or stuff in a underground or outdoor space is a plus)
-6. Solar panels — preferred (but not mandatory)
+Scoring philosophy:
+- Focus on overall quality, modern comfort, and energy efficiency.
+- An EPC label of A or B is a major positive indicator (modern insulation, energy efficiency). An EPC A or B home in turnkey, clean, or well-maintained condition with good space/kitchen/garden should easily score 8.0 - 9.5, even if a heat pump or the word "renovated" is not explicitly mentioned.
+- Do NOT penalize a property just because the word "gerenoveerd" is missing; many homes are newer builds, modern, or inherently well-kept without needing renovation.
+- Features like a garage/parking spot, garden, terrace, air conditioning, solar panels, and bicycle storage are strong positive bonuses.
+- Edge of city / residential / suburban area is preferred over noisy city center.
 
-Your scoring criteria (1-10 scale):
-- 9-10: Clearly renovated/new build, modern finishes, contemporary design
-- 7-8: Recently updated, mostly modern, well-maintained
-- 5-6: Average, some modern elements but also dated aspects
-- 3-4: Older style, needs updating, basic finishes
-- 1-2: Very dated, poor condition, old-fashioned
+Scoring scale (1-10):
+- 9.0-10.0: Exceptional, new build or high-end modern finish, EPC A, premium kitchen/bath, great outdoor space/garage.
+- 8.0-8.9: Very good, turnkey/contemporary, EPC A or B, well-maintained, clean finishes, great comfort.
+- 7.0-7.9: Good solid home, mostly modern, pleasant living space, decent energy rating, minor updates optional.
+- 5.0-6.9: Average, older style with some updates or dated finishes, habitable but not modern.
+- 3.0-4.9: Outdated, needs modernization (op te frissen/te renoveren), basic finishes, poor EPC (E/F).
+- 1.0-2.9: Heavy renovation needed, dilapidated, or non-residential (land, parking, storage).
 
 Key positive indicators (Dutch/Flemish):
-- "gerenoveerd", "nieuwbouw", "modern afgewerkt", "hedendaags", "recent gerenoveerd"
-- "nieuwe keuken", "inbouwtoestellen", "strakke afwerking", "design"
-- "recentelijk vernieuwd", "eigentijds", "kwalitatief", "luxueus"
-- Good EPC labels (A, B), new appliances, quality materials
+- "nieuwbouw", "gerenoveerd", "hedendaags", "modern afgewerkt", "instapklaar", "kwalitatief"
+- "nieuwe keuken", "inbouwtoestellen", "zonnepanelen", "warmtepomp", "airco", "tuin", "garage", "carport"
+- Excellent EPC (A+, A, B)
 
 Key negative indicators:
-- "op te frissen", "te renoveren", "originele staat", "klassiek"
-- "oudere keuken", "verouderd", "basisafwerking"
+- "op te frissen", "te renoveren", "volledig te renoveren", "af te breken", "verouderd", "basiscomfort"
+- Poor EPC (E, F)
 
-You MUST respond with valid JSON only. No extra text."""
+You MUST respond with valid raw JSON only. No markdown formatting, no explanations outside the JSON."""
 
-    USER_PROMPT_TEMPLATE = """Score this apartment listing for modernity and cleanliness.
+    USER_PROMPT_TEMPLATE = """Score this property listing for modern comfort and living quality:
 
+Property Type: {property_type}
+Transaction: {transaction_type}
 Title: {title}
-Price: €{price}/month
+Price: {price_formatted}
 Address: {address}
 Surface: {surface}m²
 EPC: {epc}
@@ -75,13 +79,45 @@ Respond with this exact JSON format:
             try:
                 from groq import Groq
                 self.client = Groq(api_key=self.api_key)
-                logger.info("✅ Groq client initialized")
+                logger.info(f"✅ Groq client initialized (model: {self.MODEL})")
             except ImportError:
                 logger.warning("⚠️ groq package not installed, text scoring disabled")
             except Exception as e:
                 logger.warning(f"⚠️ Failed to initialize Groq client: {e}")
         else:
             logger.warning("⚠️ GROQ_API_KEY not set, text scoring disabled")
+
+    @staticmethod
+    def _extract_json(text: str) -> dict | None:
+        """Extract and parse JSON from a response that might contain markdown or extra text."""
+        if not text:
+            return None
+
+        # 1. Try direct parse
+        try:
+            return json.loads(text.strip())
+        except json.JSONDecodeError:
+            pass
+
+        # 2. Try stripping markdown code fences
+        cleaned = text.strip()
+        if "```" in cleaned:
+            match = re.search(r'```(?:json)?\s*([\s\S]*?)\s*```', cleaned)
+            if match:
+                try:
+                    return json.loads(match.group(1).strip())
+                except json.JSONDecodeError:
+                    pass
+
+        # 3. Try regex search for modern_score JSON object
+        match = re.search(r'\{[^{}]*"modern_score"[^{}]*\}', cleaned, re.DOTALL)
+        if match:
+            try:
+                return json.loads(match.group(0))
+            except json.JSONDecodeError:
+                pass
+
+        return None
 
     @property
     def is_available(self) -> bool:
@@ -102,9 +138,14 @@ Respond with this exact JSON format:
         if len(description) < 20:
             description = "Limited description available. Infer only from title, EPC, surface, bedrooms, and any location clues."
 
+        is_buy = getattr(listing, "transaction_type", "rent") == "buy" or (listing.price and listing.price > 10000)
+        price_formatted = f"€{listing.price:,}".replace(",", ".") if is_buy else f"€{listing.price}/month"
+
         prompt = self.USER_PROMPT_TEMPLATE.format(
+            property_type=getattr(listing, "property_type", "apartment") or "property",
+            transaction_type="Buy" if is_buy else "Rent",
             title=listing.title,
-            price=listing.price,
+            price_formatted=price_formatted,
             address=listing.address,
             surface=listing.surface_m2 or "unknown",
             epc=listing.epc_label or "unknown",
@@ -114,18 +155,34 @@ Respond with this exact JSON format:
 
         for attempt in range(self.MAX_RETRIES + 1):
             try:
-                response = self.client.chat.completions.create(
-                    model=self.MODEL,
-                    messages=[
+                # Use response_format for native JSON output when supported
+                create_kwargs = {
+                    "model": self.MODEL,
+                    "messages": [
                         {"role": "system", "content": self.SYSTEM_PROMPT},
                         {"role": "user", "content": prompt},
                     ],
-                    temperature=0.3,
-                    max_tokens=200,
-                )
+                    "temperature": 0.2,
+                    "max_tokens": 500,
+                }
+                try:
+                    create_kwargs["response_format"] = {"type": "json_object"}
+                    response = self.client.chat.completions.create(**create_kwargs)
+                except Exception as rf_err:
+                    # Fallback without response_format if model or endpoint rejects it
+                    logger.debug(f"[text_scorer] JSON mode fallback without response_format: {rf_err}")
+                    create_kwargs.pop("response_format", None)
+                    response = self.client.chat.completions.create(**create_kwargs)
 
-                content = response.choices[0].message.content
-                result = json.loads(content)
+                content = response.choices[0].message.content or ""
+                result = self._extract_json(content)
+
+                if not result:
+                    logger.warning(f"[text_scorer] Could not parse JSON from: {content[:120]}")
+                    if attempt < self.MAX_RETRIES:
+                        time.sleep(self.RETRY_DELAY)
+                        continue
+                    return DEFAULT_SCORE, "Failed to parse AI response"
 
                 score = float(result.get("modern_score", DEFAULT_SCORE))
                 score = max(1.0, min(10.0, score))  # Clamp to 1-10
@@ -136,13 +193,6 @@ Respond with this exact JSON format:
                     f"score={score}, reason={reasoning[:80]}"
                 )
                 return score, reasoning
-
-            except json.JSONDecodeError as e:
-                logger.warning(f"[text_scorer] Invalid JSON response: {e}")
-                if attempt < self.MAX_RETRIES:
-                    time.sleep(self.RETRY_DELAY)
-                    continue
-                return DEFAULT_SCORE, "Failed to parse AI response"
 
             except Exception as e:
                 error_str = str(e).lower()

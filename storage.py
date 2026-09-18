@@ -87,44 +87,62 @@ def normalize_text(value: str) -> str:
     return collapsed
 
 
+def extract_street_token(address: str, title: str = "") -> str:
+    """Extract a normalized street or location identifier for fuzzy matching."""
+    raw = address or ""
+    # Strip trailing postal code and city: e.g. "Faliestraat 62 - 9620 Zottegem" -> "Faliestraat 62"
+    cleaned = re.sub(r'[-–]\s*\d{4}\s+.*$', '', raw).strip()
+    # Match leading alphabetic street name: e.g. "Faliestraat"
+    match = re.match(r'^([A-Za-z\s-]+)', cleaned)
+    if match:
+        token = normalize_text(match.group(1))
+        if len(token) >= 3:
+            return token[:25]
+
+    # Fallback: check if title has a street name
+    if title:
+        title_cleaned = re.sub(r'^(?:appartement|huis|house|apartment|project|woning)\s+(?:te\s+(?:koop|huur)\s+)?', '', title, flags=re.IGNORECASE)
+        match_t = re.match(r'^([A-Za-z\s-]+)', title_cleaned)
+        if match_t:
+            token = normalize_text(match_t.group(1))
+            if len(token) >= 3 and token not in {"koop", "huur", "sale", "rent"}:
+                return token[:25]
+
+    return ""
+
+
 def listing_fingerprint(listing: Listing) -> str:
     """Stable cross-platform fingerprint for a property.
 
-    Uses postal code + price + bedrooms + surface to match the same physical
-    property across platforms (e.g., Immoweb vs Spotto).  When surface is
-    unknown (0) we fall back to including the platform-specific unique key so
-    that two different listings on the same platform with the same price never
-    collapse into a single fingerprint.
+    Uses postal code + price + bedrooms + (surface or street token) to match
+    the same physical property across platforms (e.g., Immoweb vs Spotto vs Zimmo).
     """
     postal_code = "0000"
-    match = re.search(r'\b\d{4}\b', listing.address)
+    match = re.search(r'\b\d{4}\b', listing.address or "")
     if match:
         postal_code = match.group(0)
 
+    price = str(listing.price or 0)
+    bedrooms = str(listing.bedrooms or 0)
     surface = listing.surface_m2 or 0
-    bedrooms = listing.bedrooms or 0
+    prop_type = getattr(listing, "property_type", "apartment") or "apartment"
+    trans_type = getattr(listing, "transaction_type", "rent") or "rent"
 
-    # If we have no surface info, disambiguate within the same platform by
-    # appending the unique key, which still allows cross-platform matching
-    # when two listings share postal code + price + bedrooms.
-    if surface == 0:
-        return "|".join(
-            [
-                postal_code,
-                str(listing.price or 0),
-                str(bedrooms),
-                listing.unique_key,
-            ]
-        )
+    street_token = extract_street_token(listing.address, listing.title)
 
-    return "|".join(
-        [
-            postal_code,
-            str(listing.price or 0),
-            str(bedrooms),
-            str(surface),
-        ]
-    )
+    if surface > 0:
+        # If surface is known, combine with postal code, price, bedrooms
+        parts = [postal_code, price, bedrooms, str(surface)]
+        if street_token:
+            parts.append(street_token)
+        return "|".join(parts)
+
+    # When surface is unknown (0), disambiguate using street token if available
+    if street_token:
+        return "|".join([postal_code, price, bedrooms, street_token])
+
+    # True fallback: if no street or surface info, disambiguate with unique_key
+    return "|".join([postal_code, price, bedrooms, prop_type, trans_type, listing.unique_key])
 
 
 def build_sent_index(history: dict, legacy_seen_ids: set[str]) -> tuple[set[str], set[str]]:

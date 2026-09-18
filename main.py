@@ -124,6 +124,7 @@ def enrich_listings(listings: list[Listing]) -> list[Listing]:
         "immoweb": ImmowebScraper(),
         "zimmo": ZimmoScraper(),
         "immoscoop": ImmoscoopScraper(),
+        "spotto": SpottoScraper(),
     }
 
     for listing in listings:
@@ -332,10 +333,11 @@ def main() -> None:
         if ENABLE_STATION_FILTER:
             for listing in new_listings:
                 station_result = assess_station_proximity(listing)
-                if listing.score_reasoning:
-                    listing.score_reasoning = f"{listing.score_reasoning} | {station_result.reason}"
-                else:
-                    listing.score_reasoning = station_result.reason
+                if station_result.reason and station_result.reason not in {"no location preference matches", "location filtering disabled"}:
+                    if listing.score_reasoning:
+                        listing.score_reasoning = f"{listing.score_reasoning} | {station_result.reason}"
+                    else:
+                        listing.score_reasoning = station_result.reason
 
         log_ranked_results(new_listings, f"DAILY RESULTS - {len(new_listings)} new listings ranked")
     else:

@@ -70,6 +70,7 @@ def _platform_badge(platform: str) -> str:
         "immoweb": "#FF6B00",
         "zimmo": "#2563EB",
         "immoscoop": "#7C3AED",
+        "spotto": "#E30613",
     }
     color = colors.get(platform, "#6B7280")
     return (
